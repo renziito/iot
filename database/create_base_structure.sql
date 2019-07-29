@@ -4,6 +4,7 @@ create database if not exists iot character set utf8 COLLATE utf8_general_ci;
 
 use iot;
 
+drop table if exists users;
 create table users(
 	user_id int not null primary key auto_increment,
 	user_username varchar(50) NOT NULL,
@@ -24,6 +25,7 @@ create table users(
 insert into users(user_username,user_password,user_firstname,user_lastname,user_email) values
 ('admin', '$2y$10$j0QznrGyhX/QiPGZAcAjIe2TIYtYrQjA.XxIXQA7JEqfmiOXzpqQm','Administrador', 'Del Sistema', 'jnolbertovm@gmail.com');
 
+drop table if exists user_roles;
 create table user_roles(
 	userrole_id int not null primary key auto_increment,
 	user_id int not null,
@@ -36,6 +38,7 @@ create table user_roles(
 insert into user_roles(user_id, role_id) values
 (1,1);
 
+drop table if exists user_sessions;
 create table user_sessions (
 	usersession_id int not null primary key auto_increment,
 	user_id int not null,
@@ -68,7 +71,7 @@ insert into rbac_roles(role_key,role_name) values
 ('ADMIN','Administrador'),
 ('VISOR','Visualizador');
 
-drop view vw_user_roles;
+drop view if exists vw_user_roles;
 create view vw_user_roles as 
 SELECT ur.user_id,
     ur.userrole_id,
@@ -82,7 +85,7 @@ SELECT ur.user_id,
      JOIN rbac_roles r ON r.role_id = ur.role_id AND r.status = 1
   WHERE ur.status = 1;
  
-drop view vw_user;
+drop view if exists vw_user;
 create view vw_user as
 SELECT u.user_id,
     u.user_firstname,
@@ -103,7 +106,7 @@ SELECT u.user_id,
      LEFT JOIN vw_user_roles vur ON vur.user_id = u.user_id AND vur.userrole_status = 1
   WHERE u.status = 1;
 
- 
+drop table if exists navigations;
 CREATE TABLE navigations (
 	navigation_id int not null primary key auto_increment,
 	navigation_name varchar(100) NOT NULL,
@@ -122,6 +125,7 @@ insert into navigations(navigation_name, navigation_level, navigation_depends) v
 ('Administración de Roles',2,1),
 ('Administración de Acciones',2,1);
 
+drop table if exists navigation_actions;
 CREATE TABLE navigation_actions (
 	navigationaction_id int not null primary key auto_increment,
 	navigation_id int NOT NULL,
@@ -134,6 +138,7 @@ insert into navigation_actions(navigation_id, action_id) values
 (3,2),
 (4,3);
 
+drop table if exists navigation_paths;
 CREATE TABLE navigation_paths (
 	navigationpath_id int not null primary key auto_increment,
 	navigation_id int NOT NULL,
@@ -148,6 +153,7 @@ insert into navigation_paths(navigation_id,controller_name,action_name,module_na
 (3,'role', null, 'setup'),
 (4,'action', null, 'setup');
 
+drop table if exists navigation_favorites;
 CREATE TABLE navigation_favorites (
 	navigationfavorite_id int not null primary key auto_increment,
 	user_id int NOT NULL,
@@ -156,6 +162,7 @@ CREATE TABLE navigation_favorites (
 	status tinyint(1) not null default '1'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists rbac_group_actions;
 CREATE TABLE rbac_group_actions (
 	groupaction_id int not null primary key auto_increment,
 	groupaction_name varchar(100) NOT NULL,
@@ -168,6 +175,7 @@ CREATE TABLE rbac_group_actions (
 insert into rbac_group_actions(groupaction_name) values
 ('Configuración del Sistema');
 
+drop table if exists rbac_actions;
 CREATE TABLE rbac_actions (
 	action_id int not null primary key auto_increment,
 	groupaction_id int NOT NULL,
@@ -184,6 +192,7 @@ insert into rbac_actions(groupaction_id, action_key, action_name) values
 (1,'ADMIN_ACTIONS', 'Administración de Acciones'),
 (1,'ADMIN_PERMISSION', 'Administración de Permisos');
 
+drop table if exists rbac_permissions;
 CREATE TABLE rbac_permissions (
 	permission_id int not null primary key auto_increment,
 	role_id int NOT NULL,
@@ -198,6 +207,7 @@ insert into rbac_permissions(role_id, action_id) values
 (1, 3),
 (1, 4);
 
+drop view if exists vw_user_role_permissions;
 create view vw_user_role_permissions as
 SELECT vur.user_id,
     vur.role_id,
@@ -213,7 +223,8 @@ SELECT vur.user_id,
    FROM vw_user_roles vur
      JOIN rbac_permissions p ON p.role_id = vur.role_id AND p.status = 1
      JOIN rbac_actions a ON a.action_id = p.action_id AND a.status = 1;
-    
+
+drop view if exists vw_navigation_action_paths;
  create view vw_navigation_action_paths as 
  SELECT na.navigation_id,
     na.action_id,
@@ -281,4 +292,3 @@ begin
 		,n.navigation_order
 		,n.navigation_depends;
 END;
-
