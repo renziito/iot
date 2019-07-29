@@ -1,4 +1,4 @@
-use master;
+use mysql;
 
 create database if not exists iot character set utf8 COLLATE utf8_general_ci;
 
@@ -236,8 +236,9 @@ drop view if exists vw_navigation_action_paths;
      JOIN navigations n ON n.navigation_id = np.navigation_id AND n.status = 1
   WHERE np.status = 1;
   
- 
-CREATE PROCEDURE `iot`.`sp_navigation_active`(IN `_controller_name` varchar(100), IN `_action_name` varchar(100), IN `_module_name` varchar(100))
+drop procedure if exists sp_navigation_active;
+DELIMITER $$
+CREATE PROCEDURE `sp_navigation_active`(IN `_controller_name` varchar(100), IN `_action_name` varchar(100), IN `_module_name` varchar(100))
 begin
 	select
 		vnap.action_id
@@ -253,9 +254,12 @@ begin
 		or
 		(vnap.module_name = _module_name and vnap.controller_name is null and vnap.action_name is null)
 	);
-END;
+END$$
+DELIMITER ;
 
-CREATE PROCEDURE `iot`.`sp_user_auth`(IN `_username` varchar(45))
+drop procedure if exists sp_user_auth;
+DELIMITER $$
+CREATE PROCEDURE `sp_user_auth`(IN `_username` varchar(45))
 begin
 	DECLARE _user_status	INT;
 	DECLARE _user_id 		INT;
@@ -274,10 +278,12 @@ begin
     UPDATE `users` SET user_date_lastlogin = curdate() WHERE user_id = _user_id;
    
 	SELECT FALSE as `error`, _user_id as `user_id`, _user_password as `password`;
-END;
+END$$
+DELIMITER ;
 
-
-CREATE PROCEDURE `iot`.`sp_user_navigation`(IN `_user_id` int, IN `_role_id` int)
+drop procedure if exists sp_user_navigation;
+DELIMITER $$
+CREATE PROCEDURE `sp_user_navigation`(IN `_user_id` int, IN `_role_id` int)
 begin
 	select n.*, vurp.action_id
 	from navigations n
@@ -291,4 +297,5 @@ begin
 		n.navigation_level
 		,n.navigation_order
 		,n.navigation_depends;
-END;
+END$$
+DELIMITER ;
