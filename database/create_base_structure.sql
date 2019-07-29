@@ -2,6 +2,8 @@ use master;
 
 create database if not exists iot character set utf8 COLLATE utf8_general_ci;
 
+use iot;
+
 create table users(
 	user_id int not null primary key auto_increment,
 	user_username varchar(50) NOT NULL,
