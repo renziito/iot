@@ -1,0 +1,296 @@
+/*---------------------------------
+------------ App -------------
+---------------------------------*/
+#svays-preload.preload {
+  position: fixed;
+  background: #f6f7fb;
+  z-index: 800;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#svays-preload.preload .spinner {
+  background-image: url("../img/pace/preload.png");
+  /*background-image: url('../img/logo/logo.png');*/
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin: auto;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  margin-left: 50px;
+  margin-top: -100px;
+  top: 50%;
+  -webkit-filter: grayscale(100%);
+  /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  -webkit-animation: sk-rotate 2.0s infinite linear;
+  animation: sk-rotate 2.0s infinite linear;
+}
+
+#svays-preload.preload.pos .spinner {
+  margin-left: -100px !important;
+  margin-top: -100px;
+}
+
+@media (max-width: 1199px) {
+  #svays-preload.preload .spinner {
+    margin-left: -50px;
+  }
+}
+
+@media (max-width: 991px) {
+  #svays-preload.preload .spinner {
+    margin-left: -100px;
+  }
+}
+
+.header .header-container .nav-left .dropdown-menu {
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+}
+
+.header-breadcrumbs {
+  display: block;
+  width: calc(100% - 280px);
+  position: fixed;
+  padding: 80px 30px 15px 30px;
+  z-index: 700;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dadce0;
+  margin-bottom: 0px;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+}
+
+@media print {
+  .header-breadcrumbs {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .header-breadcrumbs {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1440px) {
+  .header-breadcrumbs {
+    width: calc(100% - 70px);
+  }
+}
+
+.header-breadcrumbs .breadcrumb {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 15px;
+}
+
+.header-breadcrumbs .breadcrumb .breadcrumb-item a {
+  font-size: 12px;
+}
+
+.header-breadcrumbs .breadcrumb .breadcrumb-item.active {
+  font-size: 12px;
+  line-height: 23px;
+}
+
+.header-breadcrumbs .breadcrumb .breadcrumb-item:not(:first-child):before {
+  display: inline-block;
+  padding-right: .5rem;
+  font-size: 12px;
+  color: #6c757d;
+  content: ">";
+}
+
+.header-breadcrumbs .page-title h1, .header-breadcrumbs .page-title h2, .header-breadcrumbs .page-title h3, .header-breadcrumbs .page-title h4 {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 25px;
+}
+
+@media only screen and (max-width: 992px) {
+  .header-breadcrumbs .page-title h1, .header-breadcrumbs .page-title h2, .header-breadcrumbs .page-title h3, .header-breadcrumbs .page-title h4 {
+    font-size: 20px;
+  }
+}
+
+.header-breadcrumbs.not-title .breadcrumb {
+  padding-bottom: 0px !important;
+}
+
+.is-collapsed .header-breadcrumbs {
+  width: calc(100% - 70px);
+}
+
+@media only screen and (max-width: 992px) {
+  .is-collapsed .header-breadcrumbs {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1440px) {
+  .is-collapsed .header-breadcrumbs {
+    width: calc(100% - 280px);
+  }
+}
+
+.page-container .main-content {
+  padding: 190px 15px 15px 15px;
+  min-height: calc(100vh - 60px);
+}
+
+@media print {
+  .page-container .main-content {
+    padding: 10px 0px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .page-container .main-content {
+    padding: 175px 5px 5px 5px;
+  }
+}
+
+.page-container .main-content.not-title {
+  padding: 150px 15px 15px 15px;
+}
+
+.page-container .main-content.not-breadcrumbs {
+  padding: 95px 15px 15px 15px;
+}
+
+.bootstrap-table {
+  /*    .page-item{
+        .page-link{
+          color: $default-primary;
+        }
+        &.active{
+          .page-link{
+            color: white;
+            background-color: $default-primary;
+            border-color: $default-primary;
+          }
+        }
+      } */
+}
+
+.bootstrap-table .fixed-table-container {
+  border: none;
+}
+
+.bootstrap-table .table {
+  width: 100%;
+  margin: 0 auto;
+  clear: both;
+  border-spacing: 0;
+}
+
+.bootstrap-table .table th, .bootstrap-table .table td {
+  border: 0px solid #e6ecf5 !important;
+  border-bottom: 1px solid #e6ecf5 !important;
+  -webkit-box-sizing: content-box !important;
+  box-sizing: content-box !important;
+}
+
+.bootstrap-table .table thead tr th {
+  padding: 10px;
+  border-bottom: 2px solid #e6ecf5 !important;
+  border-top: 1px solid #dee2e6 !important;
+}
+
+.bootstrap-table .table tbody tr {
+  cursor: pointer;
+}
+
+.bootstrap-table .table tbody tr td {
+  font-size: 14px !important;
+  padding: 15px !important;
+}
+
+.bootstrap-table .table tbody tr td.table_id {
+  font-weight: bold;
+  color: #0f9aee;
+}
+
+.bootstrap-table .table tbody tr td.table_id:before {
+  content: "#";
+}
+
+.bootstrap-table .table tbody tr td .btn-group-sm > .btn {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px 9px;
+}
+
+@media (max-width: 991px) {
+  .table-responsive {
+    border: 0px;
+  }
+}
+
+.page-container.pos {
+  padding-left: 0px;
+}
+
+.page-container.pos .header {
+  width: 100%;
+}
+
+.page-container.pos .header .navbar-brand {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.page-container.pos .main-content {
+  padding: 65px 0px 0px 0px;
+}
+
+.page-container.pos .main-content.pos-wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
+.form-group {
+  margin-bottom: 10px !important;
+}
+
+.form-group .label-required:after {
+  content: ' (*)';
+  color: red;
+}
+
+.form-control:focus {
+  border-color: #009ec3;
+}
+
+/*---------------------------------
+------------ App -------------
+---------------------------------*/
+.side-nav-inner .side-nav-logo > a {
+  /*max-width: 240px !important;*/
+}
+
+.side-nav-inner .side-nav-logo > a .logo {
+  background-size: contain;
+}
+
+.is-collapsed .side-nav .side-nav-inner .side-nav-logo > a .logo {
+  /*width: 240px !important;*/
+}
+
+.side-nav-dark .side-nav {
+  /*background-color: #384D63;*/
+  color: #99abb4;
+}

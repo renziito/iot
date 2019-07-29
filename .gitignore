@@ -1,0 +1,18 @@
+### Composer ###
+composer.phar
+composer.lock
+/vendor/
+
+
+### Yii ###
+assets/*
+!assets/.gitkeep
+protected/runtime/*
+protected/vendor/*
+!protected/runtime/.gitkeep
+
+### Custom ###
+nbproject/*
+static/third_party/*
+*.lock
+.vscode

@@ -1,0 +1,41 @@
+{
+  "name": "nolbertovilchez/template",
+  "description": "Template Application",
+  "type": "project",
+  "require": {
+    "yiisoft/yii": "^1.1",
+    "bower-asset/bootstrap": "^4.0",
+    "bower-asset/jquery": "^3.3",
+    "bower-asset/jquery-ui": "^1.12",
+    "bower-asset/moment": "^2.20",
+    "bower-asset/popper.js": "^1.13",
+    "bower-asset/animate-css": "^3.5",
+    "bower-asset/perfect-scrollbar": "^0.8.1",
+    "bower-asset/pace": "^1.0",
+    "bower-asset/sweetalert2": "^7.26",
+    "bower-asset/noty": "^3.1",
+    "bower-asset/jquery-validation": "^1.18",
+    "ktamas77/firebase-php": "^2.2",
+    "bower-asset/select2": "^4.0",
+    "dompdf/dompdf": "^0.8.3",
+    "bower-asset/bootstrap-datepicker": "^1.8",
+    "bower-asset/bootstrap-table": "1.12.1",
+    "phpoffice/phpspreadsheet": "^1.6"
+  },
+  "authors": [
+    {
+      "name": "José Nolberto Vilchez Moreno",
+      "email": "jnolbertovm@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "vendor-dir": "protected/vendor",
+    "fxp-asset": {
+      "installer-paths": {
+        "bower-asset-library": "static/third_party"
+      }
+    }
+  }
+}
