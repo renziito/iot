@@ -6,9 +6,9 @@
  */
 return [
     'basePath'          => dirname(__FILE__) . DIRECTORY_SEPARATOR . "..",
-    'name'              => 'Ines :: Sistema de Facturación Electrónica',
+    'name'              => 'IOT :: Internet of Things',
     'theme'             => 'espire',
-    'defaultController' => 'dashboard',
+    'defaultController' => 'home',
     'language'          => 'es',
     'sourceLanguage'    => 'es',
     'timeZone'          => 'America/Lima',
