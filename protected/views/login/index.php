@@ -18,7 +18,7 @@ $errors = yii::app()->user->getFlash("errorLogin");
                           <img class="img-responsive inline-block mt-3" src="<?= Utils::host(Yii::app()->params["app-img-logo"], true); ?>" width="200" alt="">
                         </div>
                         <h1 class="text-center mb-0">Iniciar Sesión</h1>
-                        <h4 class="text-center mrg-btm-15">Acceder a Inés</h4>
+                        <h4 class="text-center mrg-btm-15">Acceder a ioT</h4>
                         <p class="mrg-btm-15 font-size-14">Por favor ingrese sus credenciales de acceso.</p>
                         <?php
                         $form   = $this->beginWidget('CActiveForm', [
