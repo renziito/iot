@@ -41,9 +41,9 @@ class RoleController extends Auth {
       $params['order']  = Yii::app()->request->getQuery('order', 'asc');
       $params['term']   = Yii::app()->request->getQuery('search', "");
 
-      $data['data'] = RolesQuery::search($params);
+      $data = RolesQuery::search($params);
 
-      Response::JSON(FALSE, 200, "Roles obtenidos exitosamente", $data);
+      Response::JSON(FALSE, 200, "Roles obtenidos exitosamente", compact("data"));
     } catch (Exception $exc) {
       Response::JSON(TRUE, $exc->getCode(), $exc->getMessage());
     }
@@ -104,11 +104,18 @@ class RoleController extends Auth {
   public function actionSavePermission($id) {
     try {
       if (!Yii::app()->request->isAjaxRequest) {
-        throw new Exception("Acceso no autorizado", 403);
+        throw new Exception("Método no permitido", 403);
       }
 
       if (!$action = Yii::app()->request->getPost("action")) {
-        throw new Exception("Acceso no autorizado", 403);
+        throw new Exception("Método no permitido", 403);
+      }
+      
+      $sudo = (in_array(Yii::app()->user->role()->role_key, Yii::app()->authManager->defaultRoles));
+      $role = RolesModel::model()->findByPk($id);
+
+      if (!$role || ($role->role_default == 1 && !$sudo)) {
+        throw new Exception(" No tiene los permisos suficientes para realizar esta acción.", 403);
       }
 
       $model = PermissionsModel::model()->find("status is true and role_id = :role_id and action_id = :action_id", [
@@ -127,14 +134,14 @@ class RoleController extends Auth {
       if (!$model->save()) {
         throw new Exception("No se pudo asignar la acción al rol seleccionado", 500);
       }
-      
+
       $message = "Acción retirada correctamente";
       if ($action["status"])
         $message = "Acción asignada correctamente";
 
       Response::JSON(FALSE, 200, $message, []);
     } catch (Exception $ex) {
-      Response::JSON(TRUE, $exc->getCode(), $exc->getMessage());
+      Response::JSON(TRUE, $ex->getCode(), $ex->getMessage());
     }
   }
 

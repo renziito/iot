@@ -34,7 +34,7 @@ class RolesQuery {
 
     $sql = "SELECT 
               datos.*,
-              {$off} as admin
+              {$off} as role_setting
             FROM (
                   select 
                     role_id
@@ -42,6 +42,7 @@ class RolesQuery {
                     ,role_key
                     ,role_description
                     ,role_status
+                    ,role_default
                     ,concat(role_name,role_key,COALESCE(role_description,'')) as concatenado
                   from rbac_roles
                   where status = 1

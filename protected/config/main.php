@@ -41,7 +41,7 @@ return [
         ],
         'db'           => [],
         'errorHandler' => [
-//            'errorAction' => 'error',
+            'errorAction' => 'error',
         ]
     ],
     'params'            => require(dirname(__FILE__) . '/params.php'),

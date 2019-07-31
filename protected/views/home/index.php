@@ -4,7 +4,7 @@
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="<?=Yii::app()->createUrl("dashboard")?>">Ingresar</a>
+          <a class="nav-link" href="<?=Yii::app()->createUrl("dashboard/overview")?>">Ingresar</a>
         </li>
       </ul>
     </div>

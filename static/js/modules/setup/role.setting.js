@@ -16,6 +16,8 @@
       if (!response.error) {
         Notify("success", response.message);
       }
+    }).fail(function(error){
+      Notify("error", error.responseJSON.message);
     });
   };
 

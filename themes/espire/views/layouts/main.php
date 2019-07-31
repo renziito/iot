@@ -31,8 +31,6 @@ $flashes = Yii::app()->user->getFlashes();
     <link rel="shortcut icon" href="<?= Utils::host(Yii::app()->params["app-img-favicon"], true) ?>/favicon-16x16.png"/>
     <link rel="icon" type="image/x-icon" href="<?= Utils::host(Yii::app()->params["app-img-favicon"], true) ?>/favicon.ico" />
     
-    <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase-database.js"></script>
     <script type="text/javascript">
       var Request = {
         Host: '<?= Yii::app()->request->hostInfo ?>',
@@ -67,10 +65,6 @@ $flashes = Yii::app()->user->getFlashes();
             <?= $this->renderPartial("//layouts/main/_breadcrumbs") ?>
           <?php endif; ?>
           <!-- Header END -->
-
-          <!-- Side Panel START -->
-          <?= $this->renderPartial("//layouts/main/_sidepanel") ?>
-          <!-- Side Panel END -->
 
           <!-- Content Wrapper START -->
           <div class="main-content <?= (!$this->section_breadcrumbs) ? " not-breadcrumbs " : "" ?>  <?= (!$this->current_title) ? " not-title " : "" ?>">

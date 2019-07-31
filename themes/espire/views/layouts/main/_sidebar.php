@@ -12,7 +12,7 @@
       </div>
     </div>
     <ul class="side-nav-menu scrollable">
-      <li class="nav-item">
+      <li class="nav-item dropdown <?=(isset($this->module) && $this->module->id == "dashboard") ? "open" : ""?>">
         <a class="mrg-top-30" href="<?= Yii::app()->createUrl("dashboard") ?>">
           <span class="icon-holder">
             <i class="ti-home"></i>
@@ -25,20 +25,18 @@
       if ($navigation):
         foreach ($navigation as $parent_id => $parent):
           $parent_open = "";
-          if (($parent["items"] && $parent["active"]) || ($parent_id == 5 && APP_INVENTORY && $this->module->id == "inventory")) {
+          if ($parent["active"]) {
             $parent_open = "open";
-          } elseif (!$parent["items"] && $parent["active"]) {
-            $parent_open = "active";
           }
           $parent_url = (!$parent["url"]) ? "javascript:void(0);" : Yii::app()->createUrl($parent["url"]);
           ?>
           <!-- active open-->
-          <li class="nav-item <?= ($parent["items"]) ? " dropdown " : " " ?> <?= $parent_open ?>">
+          <li class="nav-item dropdown <?= $parent_open ?>">
             <a class="dropdown-toggle" href="<?= $parent_url ?>">
               <span class="icon-holder">
                 <i class="<?= $parent["icon"] ?>"></i>
               </span>
-              <span class="title"><?= ($parent_id == 5 && APP_INVENTORY) ? "Inventario" : $parent["name"] ?></span>
+              <span class="title"><?= $parent["name"] ?></span>
               <?php if ($parent["items"]): ?>
                 <span class="arrow">
                   <i class="ti-angle-right"></i>
@@ -79,28 +77,6 @@
                       </ul>
                     <?php endif; ?>
                   </li>
-                  <?php if ($parent_id == 5 && APP_INVENTORY): ?>
-<!--                    <li class="nav-item <?= ($this->id == "report") ? " active " : "" ?>">
-                      <a href="<?= Yii::app()->createUrl("inventory/report"); ?>">
-                        <span>Informe</span>
-                      </a>
-                    </li>-->
-                    <li class="nav-item <?= ($this->id == "kardex") ? " active " : "" ?>">
-                      <a href="<?= Yii::app()->createUrl("inventory/kardex"); ?>">
-                        <span>Kardex</span>
-                      </a>
-                    </li>
-                    <li class="nav-item <?= ($this->id == "warehouse") ? " active " : "" ?>">
-                      <a href="<?= Yii::app()->createUrl("inventory/warehouse"); ?>">
-                        <span>Almacenes</span>
-                      </a>
-                    </li>
-                    <li class="nav-item <?= ($this->id == "category") ? " active " : "" ?>">
-                      <a href="<?= Yii::app()->createUrl("inventory/category"); ?>">
-                        <span>Categorías</span>
-                      </a>
-                    </li>
-                  <?php endif; ?>
                 <?php endforeach; ?>
               </ul>
             <?php endif; ?>

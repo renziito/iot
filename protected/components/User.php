@@ -33,7 +33,7 @@ class User {
     }
     $navigation   = UserQuery::getNavigationByRole(Yii::app()->user->id, Yii::app()->user->role()->role_id);
     $actionActive = NavigationQuery::validateActive($controller_name, $action_name, $module_name);
-
+    
     foreach ($navigation as $row => $item) {
       $active = ($item["action_id"] == $actionActive) ? true : false;
 

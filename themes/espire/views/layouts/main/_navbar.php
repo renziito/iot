@@ -83,11 +83,6 @@
           </li>
         </ul>
       </li>
-      <li>
-        <a class="side-panel-toggle" href="javascript:void(0);">
-          <i class="ti-align-right"></i>
-        </a>
-      </li>
     </ul>
   </div>
 </div>

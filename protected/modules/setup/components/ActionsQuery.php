@@ -15,10 +15,6 @@ class ActionsQuery {
       ->join("rbac_group_actions ga", "ga.groupaction_id = a.groupaction_id")
       ->where("a.action_status = 1 and a.status = 1");
 
-    if (!in_array(Yii::app()->user->role()->role_key, Yii::app()->authManager->defaultRoles)) {
-      $command->andWhere("a.action_setup is false");
-    }
-
     $command->order("ga.groupaction_order,a.action_id");
     return $command->queryAll();
   }

@@ -61,7 +61,7 @@
       var obj = data.find(unidad => unidad.name === value);
       return (params === (typeof obj === "undefined"));
     }, 'El Rol ingresado ya existe.');
-    
+
   };
 
   RoleIndex.prototype.initFormManage = function () {
@@ -112,7 +112,7 @@
 
   RoleIndex.prototype.initModalDelete = function () {
     var _class = this;
-    
+
     this.$modalDelete.on("hidden.bs.modal", function (e) {
       _class._clearForm(_class.$formDelete);
     });
@@ -140,10 +140,6 @@
         align: 'center',
         width: '160px',
         formatter(value, row, index, field) {
-          if (row.admin == 0 && !row.role_status) {
-            return "";
-          }
-
           var view = [
             '<div class="wrapper text-center" action="toolbar">',
             '<div class="btn-group btn-group-sm" action="group">',
@@ -153,6 +149,16 @@
             '</div>',
             '</div>'
           ];
+
+          if (row.role_setting == 0 && row.role_default == 1) {
+            view = [
+              '<div class="wrapper text-center" action="toolbar">',
+              '<div class="btn-group btn-group-sm" action="group">',
+              '<button type="button" class="edit btn btn-outline-info" data-action="modify"><i class="fa fa-pencil" aria-hidden="true"></i></button>',
+              '</div>',
+              '</div>'
+            ];
+          }
 
           return view.join("");
         },
@@ -166,7 +172,7 @@
             _class.$form.find("textarea#txtroledescription").html(row.role_description);
           },
           'click .setting': function (e, value, row, index) {
-            window.location.href = _class.config.url.controllerFullUrl + '/setting/id/'+row.role_id;
+            window.location.href = _class.config.url.controllerFullUrl + '/setting/id/' + row.role_id;
           },
           'click .delete': function (e, value, row, index) {
             _class._openModal(_class.$modalDelete);
@@ -177,7 +183,7 @@
         }
       }
     ]);
-    
+
     this.table.init();
   };
 

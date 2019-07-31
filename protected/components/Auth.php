@@ -46,6 +46,7 @@ class Auth extends Builder {
   public function accesoSistema() {
     return [
         ['allow',
+            'roles' => ["SUPERADMIN"],
             'users' => ['@'],
         ],
         ['allow',
