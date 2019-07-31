@@ -58,6 +58,11 @@
           };
         },
         formatter: function (value, row, index) {
+          var btnUpdate = '<a data-toggle="tooltip" title="Editar" href="' + _class.url.update + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i></a>';
+          var btnUsers = '<a data-toggle="tooltip" title="Usuarios" href="' + _class.url.users + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-user"></i></a>';
+          var btnDevices = '<a data-toggle="tooltip" title="Dispositivos" href="' + _class.url.devices + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-cubes"></i></a>';
+          var btnDelete = '<button data-toggle="tooltip" title="Eliminar" class="btn btn-danger btn-sm delete-project"><i class="fa fa-trash"></i></button>';
+          
           var view = [
             '<div class="card mb-2">',
             '<div class="card-block">',
@@ -67,16 +72,26 @@
             '<h6 class="text-muted">ID: ' + row.code + '</h6>',
             '<p>' + row.description + '</9>',
             '</div>',
-            '<div class="col-12 col-md-4 text-right">',
-            '<a data-toggle="tooltip" title="Editar" href="' + _class.url.update + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i></a>',
-            '<a data-toggle="tooltip" title="Usuarios" href="' + _class.url.users + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-user"></i></a>',
-            '<a data-toggle="tooltip" title="Dispositivos" href="' + _class.url.devices + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-cubes"></i></a>',
-            '<button data-toggle="tooltip" title="Eliminar" class="btn btn-danger btn-sm delete-project"><i class="fa fa-trash"></i></button>',
-            '</div>',
-            '</div>',
-            '</div>',
-            '</div>',
+            '<div class="col-12 col-md-4 text-right">'
           ];
+
+          if (row.update) {
+            view.push(btnUpdate);
+          }
+          if (row.users) {
+            view.push(btnUsers);
+          }
+          if (row.devices) {
+            view.push(btnDevices);
+          }
+          if (row.delete) {
+            view.push(btnDelete);
+          }
+
+          view.push('</div>');
+          view.push('</div>');
+          view.push('</div>');
+          view.push('</div>');
 
           return view.join("");
         },
@@ -91,8 +106,8 @@
                 .then(function (data) {
                   _class.table.refresh();
                 })
-                .catch(function(error){
-                  
+                .catch(function (error) {
+
                 });
             });
           }

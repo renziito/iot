@@ -247,6 +247,10 @@
             '<i class="fa fa-trash"></i>',
             '</button>'
           ];
+          
+          if(!row.active){
+            view = [];
+          }
 
           return view.join("");
         },

@@ -12,7 +12,7 @@ class ProjectsQuery {
           ")
       ->from("projects p");
 
-    if (!in_array(Yii::app()->user->role()->role_key, Yii::app()->authManager->defaultRoles)) {
+    if (!Yii::app()->user->sudo) {
       $user_id = Yii::app()->user->id;
       $role_id = RolesQuery::getIdByKey("ADMIN");
       $command->join("project_users pu", "pu.project_id = p.project_id and pu.user_id = :user_id and pu.status = 1 and pu.role_id = :role_id", [
@@ -40,7 +40,7 @@ class ProjectsQuery {
 
   public static function isAdmin($project_id) {
     
-    if (in_array(Yii::app()->user->role()->role_key, Yii::app()->authManager->defaultRoles)) {
+    if (Yii::app()->user->sudo) {
       return true;
     }
     

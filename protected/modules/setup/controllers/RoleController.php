@@ -111,10 +111,9 @@ class RoleController extends Auth {
         throw new Exception("Método no permitido", 403);
       }
       
-      $sudo = (in_array(Yii::app()->user->role()->role_key, Yii::app()->authManager->defaultRoles));
       $role = RolesModel::model()->findByPk($id);
 
-      if (!$role || ($role->role_default == 1 && !$sudo)) {
+      if (!$role || ($role->role_default == 1 && !Yii::app()->user->sudo)) {
         throw new Exception(" No tiene los permisos suficientes para realizar esta acción.", 403);
       }
 

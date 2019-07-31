@@ -63,16 +63,30 @@ class UserQuery {
         ->select()
         ->from("vw_user_roles")
         ->where("user_id = :id", [":id" => $id])
-        ->andWhere("userrole_status is TRUE")
+        ->andWhere("userrole_status = 1")
         ->queryRow();
   }
 
   public static function getNavigationByRole($id, $role_id) {
-    $sql = "call sp_user_navigation(:user_id,:role_id);";
+    if (Yii::app()->user->sudo) {
+      $sql = "select n.*, na.action_id
+              from navigations n
+              inner join navigation_actions na on (na.navigation_id = n.navigation_id and na.status = 1)
+              where n.navigation_status = 1
+              and n.status = 1
+              order by 
+                n.navigation_level
+                ,n.navigation_order
+                ,n.navigation_depends;";
+    } else {
+      $sql = "call sp_user_navigation(:user_id,:role_id);";
+    }
 
     $command = Yii::app()->db->createCommand($sql);
-    $command->bindParam(":user_id", $id, PDO::PARAM_INT);
-    $command->bindParam(":role_id", $role_id, PDO::PARAM_INT);
+    if (!Yii::app()->user->sudo) {
+      $command->bindParam(":user_id", $id, PDO::PARAM_INT);
+      $command->bindParam(":role_id", $role_id, PDO::PARAM_INT);
+    }
 
     return $command->queryAll();
   }
@@ -91,7 +105,7 @@ class UserQuery {
     $andWhere    = "";
     $value_build = [];
 
-    if (in_array(Yii::app()->user->role()->role_key, Yii::app()->authManager->defaultRoles)) {
+    if (Yii::app()->user->sudo) {
       return true;
     }
 

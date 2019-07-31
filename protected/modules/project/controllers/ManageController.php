@@ -181,7 +181,7 @@ class ManageController extends Auth {
       Response::Error($ex);
     }
   }
-  
+
   public function actionAssignedUsersVisor() {
     try {
       if (!Yii::app()->request->isAjaxRequest)
@@ -216,10 +216,11 @@ class ManageController extends Auth {
 
       foreach ($users as $user) {
         $data[] = [
-            "id"    => $user["projectuser_id"],
-            "name"  => "{$user["user_firstname"]} {$user["user_lastname"]}",
-            "email" => $user["user_email"],
-            "img"   => $user["user_img_profile"],
+            "id"     => $user["projectuser_id"],
+            "name"   => "{$user["user_firstname"]} {$user["user_lastname"]}",
+            "email"  => $user["user_email"],
+            "img"    => $user["user_img_profile"],
+            "active" => (bool)(Yii::app()->user->id == $user["user_id"])
         ];
       }
 

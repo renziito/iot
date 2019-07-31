@@ -39,7 +39,7 @@ class RolesQuery {
    */
   public static function search($param) {
     $off = 0;
-    if (in_array(Yii::app()->user->role()->role_key, Yii::app()->authManager->defaultRoles)) {
+    if (Yii::app()->user->sudo) {
       $off = 1;
     }
 

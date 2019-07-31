@@ -33,7 +33,7 @@ class User {
     }
     $navigation   = UserQuery::getNavigationByRole(Yii::app()->user->id, Yii::app()->user->role()->role_id);
     $actionActive = NavigationQuery::validateActive($controller_name, $action_name, $module_name);
-    
+
     foreach ($navigation as $row => $item) {
       $active = ($item["action_id"] == $actionActive) ? true : false;
 
@@ -56,7 +56,7 @@ class User {
         $data[$id] = $dataItem;
       }
     }
-    
+
     return $data;
   }
 
@@ -95,6 +95,15 @@ class User {
     }
 
     return $navigation;
+  }
+
+  public static function isSudo($role_key) {
+    foreach (Yii::app()->authManager->defaultRoles as $default) {
+      if ($default == $role_key) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

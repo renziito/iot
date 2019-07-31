@@ -48,12 +48,14 @@ class UserIdentity extends CUserIdentity {
           $userInfo = UserQuery::getByID($validate["user_id"]);
 
           $userRole = UserQuery::getRoleByID($validate["user_id"]);
+          $sudo = User::isSudo($userRole["role_key"]);
 
           $this->errorCode = self::ERROR_NONE;
           $this->_id       = $validate["user_id"];
           $this->setState("firstname", $userInfo["user_firstname"]);
           $this->setState("fullname", "{$userInfo["user_firstname"]} {$userInfo["user_lastname"]}");
           $this->setState("account_ID", $account_ID);
+          $this->setState("sudo", $sudo);
           $this->setState("lastname", $userInfo["user_lastname"]);
           $this->setState("email", $userInfo["user_email"]);
           $this->setState("img_profile", $userInfo["user_img_profile"]);

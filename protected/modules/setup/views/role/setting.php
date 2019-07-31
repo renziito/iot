@@ -4,10 +4,9 @@ $this->breadcrumbs = [
     "Roles"   => $this->createUrl("index"),
     "Configuración"
 ];
-$sudo              = (in_array(Yii::app()->user->role()->role_key, Yii::app()->authManager->defaultRoles));
 ?>
 <div class="row">
-  <?php if (!$sudo && $model->role_default == 1): ?>
+  <?php if (!Yii::app()->user->sudo && $model->role_default == 1): ?>
     <div class="col-12">
       <div class="alert alert-warning">
         La configuración del rol <strong><?= $model->role_name ?></strong> no puede ser edita por usted. No tiene los permisos suficientes para realizar esta acción.
@@ -36,7 +35,7 @@ $sudo              = (in_array(Yii::app()->user->role()->role_key, Yii::app()->a
             <?php foreach ($group["items"] as $row => $action): ?>
               <?php
               $checked  = (isset($roleActions[$action["action_id"]])) ? " checked='' " : "";
-              $disabled = (!$sudo && $model->role_default == 1) ? "disabled" : "";
+              $disabled = (!Yii::app()->user->sudo && $model->role_default == 1) ? "disabled" : "";
               ?>
               <div class="col-12 col-md-4">
                 <div class="checkbox ">
