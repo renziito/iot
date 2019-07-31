@@ -23,10 +23,10 @@ class Assets extends AssetsBundle
         ]
     ];
     public $action     = [
-        "overview.index"  => [
-            "js"      => [],
+        "manage.users"  => [
+            "js"      => ["users.js"],
             "css"     => [],
-            "depends" => [],
+            "depends" => ["tablePlugin"],
         ],
     ];
 }

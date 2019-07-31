@@ -45,9 +45,9 @@ class UserIdentity extends CUserIdentity {
         ]);
 
         if ($session) {
-          $userInfo = UserQuery::getDataByID($validate["user_id"]);
+          $userInfo = UserQuery::getByID($validate["user_id"]);
 
-          $userRole = UserQuery::getRole($validate["user_id"]);
+          $userRole = UserQuery::getRoleByID($validate["user_id"]);
 
           $this->errorCode = self::ERROR_NONE;
           $this->_id       = $validate["user_id"];

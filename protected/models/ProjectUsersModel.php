@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'project_users':
  * @property integer $projectuser_id
  * @property integer $project_id
+ * @property integer $role_id
  * @property integer $user_id
  * @property integer $status
  */
@@ -27,11 +28,11 @@ class ProjectUsersModel extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('project_id, user_id', 'required'),
-			array('project_id, user_id, status', 'numerical', 'integerOnly'=>true),
+			array('project_id, role_id, user_id', 'required'),
+			array('project_id, role_id, user_id, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('projectuser_id, project_id, user_id, status', 'safe', 'on'=>'search'),
+			array('projectuser_id, project_id, role_id, user_id, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +55,7 @@ class ProjectUsersModel extends CActiveRecord
 		return array(
 			'projectuser_id' => 'Projectuser',
 			'project_id' => 'Project',
+			'role_id' => 'Role',
 			'user_id' => 'User',
 			'status' => 'Status',
 		);
@@ -79,6 +81,7 @@ class ProjectUsersModel extends CActiveRecord
 
 		$criteria->compare('projectuser_id',$this->projectuser_id);
 		$criteria->compare('project_id',$this->project_id);
+		$criteria->compare('role_id',$this->role_id);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('status',$this->status);
 

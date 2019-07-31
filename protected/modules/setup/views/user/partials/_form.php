@@ -51,12 +51,12 @@ $form = $this->beginWidget('CActiveForm', [
             <?php 
             $role = '';
             if (isset($model->user_id)){
-              $dataRole = UserQuery::getRole($model->user_id);
+              $dataRole = UserQuery::getRoleByID($model->user_id);
               $role = $dataRole["role_id"];
             }
             ?>
             <?=
-            CHtml::dropDownList('UsersModel[role_id]', '',CHtml::listData(RolesQuery::getAll(), "role_id", "role_name"), [
+            CHtml::dropDownList('UsersModel[role_id]', $role,CHtml::listData(RolesQuery::getAll(), "role_id", "role_name"), [
                 "class" => "form-control",
             ]);
             ?>

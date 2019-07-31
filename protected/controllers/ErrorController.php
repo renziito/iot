@@ -12,9 +12,9 @@ class ErrorController extends Auth {
 
   public function actionShow() {
     if ($error = Yii::app()->errorHandler->error) {
-//      if (Yii::app()->request->isAjaxRequest) {
-//        Response::JSON(TRUE, $error["code"], $error["message"], []);
-//      } else {
+      if (Yii::app()->request->isAjaxRequest) {
+        Response::JSON(TRUE, $error["code"], $error["message"], []);
+      } else {
         if ((int) $error["code"] == 403) {
           if (Yii::app()->user->change_password) {
             Yii::app()->request->redirect(Yii::app()->createUrl("/changePassword"));
@@ -32,7 +32,7 @@ class ErrorController extends Auth {
               'error' => $error
           ]);
         }
-//      }
+      }
     } else {
       $this->redirect(Yii::app()->createUrl("dashboard"));
     }

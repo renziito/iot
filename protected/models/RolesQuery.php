@@ -4,23 +4,34 @@ class RolesQuery {
 
   public static function getAll() {
     return Yii::app()->db->createCommand()
-            ->select()
-            ->from("rbac_roles")
-            ->where("role_id <> 1 and status = :status", [
-              ":status" => Globals::STATUS_ACTIVE
-            ])
-            ->queryAll();
+        ->select()
+        ->from("rbac_roles")
+        ->where("role_id <> 1 and status = :status", [
+            ":status" => Globals::STATUS_ACTIVE
+        ])
+        ->queryAll();
+  }
+
+  public static function getIdByKey($role_key) {
+    return Yii::app()->db->createCommand()
+        ->select("role_id")
+        ->from("rbac_roles")
+        ->where("role_key = :key and status = :status", [
+            ":status" => Globals::STATUS_ACTIVE,
+            ":key"    => $role_key
+        ])
+        ->queryScalar();
   }
 
   public static function getAllActions($role_id) {
     return Yii::app()->db->createCommand()
-            ->select()
-            ->from("rbac_permissions")
-            ->where("role_id = :id and permission_status = :status and status = :status", [
-              ":id" => $role_id,
-              ":status" => Globals::STATUS_ACTIVE
-            ])
-            ->queryAll();
+        ->select()
+        ->from("rbac_permissions")
+        ->where("role_id = :id and permission_status = :status and status = :status", [
+            ":id"     => $role_id,
+            ":status" => Globals::STATUS_ACTIVE
+        ])
+        ->queryAll();
   }
 
   /**

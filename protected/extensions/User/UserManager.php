@@ -29,7 +29,7 @@ class UserManager extends CWebUser {
   }
 
   public function role() {
-    $role = UserQuery::getRole($this->id);
+    $role = UserQuery::getRoleByID($this->id);
     return (object) $role;
   }
 

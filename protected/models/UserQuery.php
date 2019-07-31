@@ -6,7 +6,26 @@
  */
 class UserQuery {
 
-  public static function getDataByID($id) {
+  public static function getAllByRole($role_id) {
+    return Yii::app()->db->createCommand()
+        ->select()
+        ->from("vw_user u")
+        ->where("u.role_id = :role_id", [":role_id" => $role_id])
+        ->queryAll();
+  }
+
+  public static function getAllUnassignedProjectByRole($role_id, $project_id) {
+    return Yii::app()->db->createCommand()
+        ->select()
+        ->from("vw_user u")
+        ->where("u.role_id = :role_id and u.user_id not in (select user_id from project_users pu where pu.project_id = :project_id and pu.status = 1)", [
+            ":role_id"    => $role_id,
+            ":project_id" => $project_id
+        ])
+        ->queryAll();
+  }
+
+  public static function getByID($id) {
     return Yii::app()->db->createCommand()
         ->select()
         ->from("vw_user u")
@@ -39,7 +58,7 @@ class UserQuery {
         ->queryScalar();
   }
 
-  public static function getRole($id) {
+  public static function getRoleByID($id) {
     return Yii::app()->db->createCommand()
         ->select()
         ->from("vw_user_roles")
