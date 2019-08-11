@@ -59,10 +59,11 @@
         },
         formatter: function (value, row, index) {
           var btnUpdate = '<a data-toggle="tooltip" title="Editar" href="' + _class.url.update + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i></a>';
-          var btnUsers = '<a data-toggle="tooltip" title="Usuarios" href="' + _class.url.users + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-user"></i></a>';
+          var btnUsers = '<a data-toggle="tooltip" title="Usuarios" href="' + _class.url.users + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-users"></i></a>';
           var btnDevices = '<a data-toggle="tooltip" title="Dispositivos" href="' + _class.url.devices + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-cubes"></i></a>';
+          var btnLogs = '<a data-toggle="tooltip" title="Log de actividades" href="' + _class.url.devices + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-binoculars"></i></a>';
           var btnDelete = '<button data-toggle="tooltip" title="Eliminar" class="btn btn-danger btn-sm delete-project"><i class="fa fa-trash"></i></button>';
-          
+
           var view = [
             '<div class="card mb-2">',
             '<div class="card-block">',
@@ -72,7 +73,9 @@
             '<h6 class="text-muted">ID: ' + row.code + '</h6>',
             '<p>' + row.description + '</9>',
             '</div>',
-            '<div class="col-12 col-md-4 text-right">'
+            '<div class="col-12 col-md-2 text-right">',
+            '</div>',
+            '<div class="col-12 col-md-2 text-right">'
           ];
 
           if (row.update) {
@@ -87,6 +90,7 @@
           if (row.delete) {
             view.push(btnDelete);
           }
+          view.push(btnLogs);
 
           view.push('</div>');
           view.push('</div>');

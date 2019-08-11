@@ -26,6 +26,16 @@ class ProjectsQuery {
     return $command->queryAll();
   }
 
+  public static function getNameById($project_id) {
+    return Yii::app()->db->createCommand()
+        ->select("project_name")
+        ->from("projects pu")
+        ->where("pu.project_id = :id and pu.status = 1", [
+            ":id" => $project_id
+        ])
+        ->queryScalar();
+  }
+
   public static function getAllAssignedUsersByRole($project_id, $role_id) {
     return Yii::app()->db->createCommand()
         ->select()
@@ -39,11 +49,11 @@ class ProjectsQuery {
   }
 
   public static function isAdmin($project_id) {
-    
+
     if (Yii::app()->user->sudo) {
       return true;
     }
-    
+
     $user_id = Yii::app()->user->id;
     $role_id = RolesQuery::getIdByKey("ADMIN");
 
@@ -60,8 +70,59 @@ class ProjectsQuery {
     if (!$command) {
       return false;
     }
-    
+
     return true;
+  }
+
+  public static function asignedAdminitratorToAll($user_id) {
+    $status        = new stdClass();
+    $status->error = false;
+
+    try {
+      $projects = self::getAll();
+
+      foreach ($projects as $project) {
+        $model = new ProjectUsersModel;
+
+        $model->user_id    = $user_id;
+        $model->project_id = $project["id"];
+        $model->role_id    = RolesQuery::getIdByKey("ADMIN");
+
+        if (!$model->save()) {
+          throw new Exception("La operación no pudo completarse correctamente", 500);
+        }
+      }
+    } catch (Exception $ex) {
+      $status->error   = new stdClass();
+      $status->code    = $ex->getCode();
+      $status->message = $ex->getMessage();
+    }
+
+    return $status;
+  }
+
+  public static function unasignedToAllByRole($user_id, $role_id) {
+    $status        = new stdClass();
+    $status->error = false;
+
+    try {
+      $projects = ProjectUsersModel::model()->updateAll([
+          "status" => Globals::STATUS_INACTIVE
+        ], "user_id = :user_id and role_id = :role_id and status = 1", [
+          ":user_id" => $user_id,
+          ":role_id" => $role_id
+      ]);
+
+      if (!is_null($projects) || $projects === FALSE) {
+        throw new Exception("La operación no pudo completarse correctamente", 500);
+      }
+    } catch (Exception $ex) {
+      $status->error   = new stdClass();
+      $status->code    = $ex->getCode();
+      $status->message = $ex->getMessage();
+    }
+
+    return $status;
   }
 
 }

@@ -1,29 +1,31 @@
 <?php
 
 /**
- * This is the model class for table "user_roles".
+ * This is the model class for table "log_events".
  *
- * The followings are the available columns in table 'user_roles':
- * @property integer $userrole_id
- * @property integer $user_id
- * @property integer $role_id
- * @property string $userrole_date_created
- * @property string $userrole_date_updated
- * @property integer $userrole_status
+ * The followings are the available columns in table 'log_events':
+ * @property integer $logevent_id
+ * @property integer $action_id
+ * @property integer $usersession_id
+ * @property integer $logevent_code
+ * @property string $logevent_message
+ * @property string $logevent_params
+ * @property integer $logevent_public
+ * @property string $logevent_date_created
  * @property integer $status
  *
  * The followings are the available model relations:
- * @property Users $user
- * @property RbacRoles $role
+ * @property RbacActions $action
+ * @property UserSessions $usersession
  */
-class UserRolesModel extends CActiveRecord
+class LogEventsModel extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'user_roles';
+		return 'log_events';
 	}
 
 	/**
@@ -34,12 +36,11 @@ class UserRolesModel extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, role_id', 'required'),
-			array('user_id, role_id, userrole_status, status', 'numerical', 'integerOnly'=>true),
-			array('userrole_date_created, userrole_date_updated', 'safe'),
+			array('action_id, usersession_id, logevent_code, logevent_message, logevent_params, logevent_date_created', 'required'),
+			array('action_id, usersession_id, logevent_code, logevent_public, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('userrole_id, user_id, role_id, userrole_date_created, userrole_date_updated, userrole_status, status', 'safe', 'on'=>'search'),
+			array('logevent_id, action_id, usersession_id, logevent_code, logevent_message, logevent_params, logevent_public, logevent_date_created, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,8 +52,8 @@ class UserRolesModel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
-			'role' => array(self::BELONGS_TO, 'RbacRoles', 'role_id'),
+			'action' => array(self::BELONGS_TO, 'RbacActions', 'action_id'),
+			'usersession' => array(self::BELONGS_TO, 'UserSessions', 'usersession_id'),
 		);
 	}
 
@@ -62,12 +63,14 @@ class UserRolesModel extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'userrole_id' => 'Userrole',
-			'user_id' => 'User',
-			'role_id' => 'Role',
-			'userrole_date_created' => 'Userrole Date Created',
-			'userrole_date_updated' => 'Userrole Date Updated',
-			'userrole_status' => 'Userrole Status',
+			'logevent_id' => 'Logevent',
+			'action_id' => 'Action',
+			'usersession_id' => 'Usersession',
+			'logevent_code' => 'Logevent Code',
+			'logevent_message' => 'Logevent Message',
+			'logevent_params' => 'Logevent Params',
+			'logevent_public' => 'Logevent Public',
+			'logevent_date_created' => 'Logevent Date Created',
 			'status' => 'Status',
 		);
 	}
@@ -90,12 +93,14 @@ class UserRolesModel extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('userrole_id',$this->userrole_id);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('role_id',$this->role_id);
-		$criteria->compare('userrole_date_created',$this->userrole_date_created,true);
-		$criteria->compare('userrole_date_updated',$this->userrole_date_updated,true);
-		$criteria->compare('userrole_status',$this->userrole_status);
+		$criteria->compare('logevent_id',$this->logevent_id);
+		$criteria->compare('action_id',$this->action_id);
+		$criteria->compare('usersession_id',$this->usersession_id);
+		$criteria->compare('logevent_code',$this->logevent_code);
+		$criteria->compare('logevent_message',$this->logevent_message,true);
+		$criteria->compare('logevent_params',$this->logevent_params,true);
+		$criteria->compare('logevent_public',$this->logevent_public);
+		$criteria->compare('logevent_date_created',$this->logevent_date_created,true);
 		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
@@ -107,7 +112,7 @@ class UserRolesModel extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return UserRolesModel the static model class
+	 * @return LogEventsModel the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

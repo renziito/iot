@@ -9,6 +9,11 @@
  * @property integer $role_id
  * @property integer $user_id
  * @property integer $status
+ *
+ * The followings are the available model relations:
+ * @property Projects $project
+ * @property RbacRoles $role
+ * @property Users $user
  */
 class ProjectUsersModel extends CActiveRecord
 {
@@ -44,6 +49,9 @@ class ProjectUsersModel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'project' => array(self::BELONGS_TO, 'Projects', 'project_id'),
+			'role' => array(self::BELONGS_TO, 'RbacRoles', 'role_id'),
+			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 		);
 	}
 

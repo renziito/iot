@@ -46,17 +46,48 @@ $form = $this->beginWidget('CActiveForm', [
           </div>
         </div>
         <div class="form-group row">
+          <label for="UsersModel_user_phone" class="col-md-2 control-label">Teléfono/Celular</label>
+          <div class="col-md-10">
+            <?=
+            $form->textField($model, 'user_phone', [
+                "class" => "form-control"
+            ]);
+            ?>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="UsersModel_user_gender" class="col-md-2 control-label">Género</label>
+          <div class="col-md-10">
+            <?=
+            CHtml::dropDownList('UsersModel[user_gender]', "",["M" => "Masculino", "F" => "Femenino"], [
+                "class" => "form-control",
+            ]);
+            ?>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="UsersModel_user_birthdate" class="col-md-2 control-label">F. de Nac.</label>
+          <div class="col-md-10">
+            <?=
+            $form->textField($model, 'user_birthdate', [
+                "class" => "form-control",
+                "readonly" => true
+            ]);
+            ?>
+          </div>
+        </div>
+        <div class="form-group row">
           <label for="UsersModel_typeuser_id" class="col-md-2 control-label">Rol</label>
           <div class="col-md-10">
-            <?php 
+            <?php
             $role = '';
-            if (isset($model->user_id)){
+            if (isset($model->user_id)) {
               $dataRole = UserQuery::getRoleByID($model->user_id);
-              $role = $dataRole["role_id"];
+              $role     = $dataRole["role_id"];
             }
             ?>
             <?=
-            CHtml::dropDownList('UsersModel[role_id]', $role,CHtml::listData(RolesQuery::getAll(), "role_id", "role_name"), [
+            CHtml::dropDownList('UsersModel[role_id]', $role, CHtml::listData(RolesQuery::getAll(), "role_id", "role_name"), [
                 "class" => "form-control",
             ]);
             ?>

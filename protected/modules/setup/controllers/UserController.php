@@ -4,7 +4,7 @@ class UserController extends Auth {
 
   public function actionIndex() {
     $this->link_favorites = true;
-    $this->current_title = "Usuarios";
+    $this->current_title  = "Usuarios";
     $this->render("index");
   }
 
@@ -27,7 +27,7 @@ class UserController extends Auth {
   }
 
   public function actionCreate() {
-    $this->link_favorites = true;
+    $this->link_favorites  = true;
     $this->current_title   = "Nuevo Usuario";
     $this->container_fluid = false;
 
@@ -59,9 +59,12 @@ class UserController extends Auth {
         if (!$modelRole->save())
           throw new Exception("No se pudo crear el usuario {$model->user_username}", 500);
 
+        if ($modelRole->role_id == RolesQuery::getIdByKey("ADMIN")) {
+          ProjectsQuery::asignedAdminitratorToAll($model->user_id);
+        }
+
         $transaction->commit();
 
-        FirebaseConsole::set(strtotime("now"), Utils::templateNotification("success", "Ha creado un nuevo usuario"));
 
         if (isset($post["send_mail"]) && $post["send_mail"] == Globals::STATUS_ACTIVE) {
           $mailer = Mailer::send($model->user_email, "La contraseña de su cuenta es: {$post["user_password"]}", "Bienvenido {$model->user_firstname}");
@@ -111,6 +114,9 @@ class UserController extends Auth {
         $model->user_lastname     = $post["user_lastname"];
         $model->user_username     = $post["user_username"];
         $model->user_email        = $post["user_email"];
+        $model->user_phone        = $post["user_phone"];
+        $model->user_gender       = $post["user_gender"];
+        $model->user_birthdate    = $post["user_birthdate"];
         $model->user_status       = $post["user_status"];
         $model->user_date_updated = Date::getDateTime();
 
@@ -119,11 +125,32 @@ class UserController extends Auth {
 
         $modelRole = UserRolesModel::model()->find("user_id = :id and userrole_status = 1 and status = 1", [":id" => $model->user_id]);
 
-        $modelRole->role_id = $post["role_id"];
+        if ((int) $modelRole->role_id !== (int) $post["role_id"]) {
+
+          $modelRole->userrole_status       = 2;
+          $modelRole->userrole_date_updated = Date::getDateTime();
+
+          if (!$modelRole->save())
+            throw new Exception("No se pudo actualizar el usuario {$model->user_username}", 500);
+
+          $modelUserRole = new UserRolesModel;
+
+          $modelUserRole->user_id = $model->user_id;
+          $modelUserRole->role_id = $post["role_id"];
+
+          $modelUserRole->userrole_date_created = Date::getDateTime();
+
+          if (!$modelUserRole->save())
+            throw new Exception("No se pudo actualizar el usuario {$model->user_username}", 500);
+
+          ProjectsQuery::unasignedToAllByRole($model->user_id, $modelRole->role_id);
+
+          if ($modelUserRole->role_id == RolesQuery::getIdByKey("ADMIN")) {
+            ProjectsQuery::asignedAdminitratorToAll($model->user_id);
+          }
+        }
 
         $transaction->commit();
-
-        FirebaseConsole::set(strtotime("now"), Utils::templateNotification("success", "Actualizó un usuario"));
 
         Yii::app()->user->setFlash("success", "El usuario <strong>{$model->user_username}</strong> ha sido actualizado correctamente");
         $this->redirect(Yii::app()->createUrl("setup/user"));
@@ -173,7 +200,7 @@ class UserController extends Auth {
 
       if (!$post = Yii::app()->request->getPost("UserUpdate"))
         throw new Exception("Parámetros enviados presentan errores. Intente nuevamente", 403);
-      
+
       $model = UsersModel::model()->findByPk($id);
 
       if (!$model)

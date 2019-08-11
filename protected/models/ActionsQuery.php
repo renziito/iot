@@ -1,12 +1,16 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 class ActionsQuery {
+
+  public static function getIdByKey($action_key) {
+    return Yii::app()->db->createCommand()
+        ->select("action_id")
+        ->from("rbac_actions")
+        ->where("status = 1 and action_key = :key", [
+            ":key" => $action_key
+        ])
+        ->queryScalar();
+  }
 
   public static function getAll() {
     $command = Yii::app()->db->createCommand()

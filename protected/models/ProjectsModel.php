@@ -10,6 +10,10 @@
  * @property string $project_resumen
  * @property integer $project_status
  * @property integer $status
+ *
+ * The followings are the available model relations:
+ * @property ProjectDevices[] $projectDevices
+ * @property ProjectUsers[] $projectUsers
  */
 class ProjectsModel extends CActiveRecord
 {
@@ -48,6 +52,8 @@ class ProjectsModel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'projectDevices' => array(self::HAS_MANY, 'ProjectDevices', 'project_id'),
+			'projectUsers' => array(self::HAS_MANY, 'ProjectUsers', 'project_id'),
 		);
 	}
 

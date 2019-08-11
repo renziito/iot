@@ -19,6 +19,13 @@ class ManageController extends Auth {
         if (!$model->save()) {
           throw new Exception("No se pudo completar la operación");
         }
+        
+        new LogEvent("PROJECT_CREATE", $model->project_id, "Creó el proyecto {pn}",
+          [
+            "pn" => $model->project_name
+          ]
+        );
+        
         $transaction->commit();
         Yii::app()->user->setFlash("success", "La operación se completó exitosamente.");
         $this->redirect(Yii::app()->createUrl("project"));
@@ -46,6 +53,13 @@ class ManageController extends Auth {
         if (!$model->save()) {
           throw new Exception("No se pudo completar la operación");
         }
+
+        new LogEvent("PROJECT_UPDATE", $model->project_id, "Actualizó el proyecto {pn}",
+          [
+            "pn" => $model->project_name
+          ]
+        );
+
         $transaction->commit();
         Yii::app()->user->setFlash("success", "La operación se completó exitosamente.");
         $this->redirect(Yii::app()->createUrl("project"));
@@ -79,6 +93,12 @@ class ManageController extends Auth {
 
       if (!$model->save())
         throw new Exception("La operación no pudo completarse correctamente", 500);
+
+      new LogEvent("PROJECT_UPDATE", $model->project_id, "Eliminó el proyecto {pn}",
+        [
+          "pn" => $model->project_name
+        ]
+      );
 
       Response::JSON(FALSE, 200, "La operación se completó exitosamente.", []);
     } catch (Exception $ex) {
@@ -175,6 +195,13 @@ class ManageController extends Auth {
       if (!$model->save()) {
         throw new Exception("La operación no pudo completarse correctamente", 403);
       }
+      
+      new LogEvent("PROJECT_ASSIGN_USERS", $model->project_id, "Agregó al usuario {un} como administrador al projecto {pn}",
+        [
+          "pn" => ProjectsQuery::getNameById($model->project_id),
+          "un" => UserQuery::getFullNameByID($model->user_id)
+        ]
+      );
 
       Response::JSON(FALSE, 200, "La operación se completó exitosamente.", compact("data"));
     } catch (Exception $ex) {
@@ -199,7 +226,14 @@ class ManageController extends Auth {
       if (!$model->save()) {
         throw new Exception("La operación no pudo completarse correctamente", 403);
       }
-
+      
+      new LogEvent("PROJECT_ASSIGN_USERS", $model->project_id, "Agregó al usuario {un} como visualizador al projecto {pn}",
+        [
+          "pn" => ProjectsQuery::getNameById($model->project_id),
+          "un" => UserQuery::getFullNameByID($model->user_id)
+        ]
+      );
+      
       Response::JSON(FALSE, 200, "La operación se completó exitosamente.", compact("data"));
     } catch (Exception $ex) {
       Response::Error($ex);
@@ -220,7 +254,7 @@ class ManageController extends Auth {
             "name"   => "{$user["user_firstname"]} {$user["user_lastname"]}",
             "email"  => $user["user_email"],
             "img"    => $user["user_img_profile"],
-            "active" => (bool)(Yii::app()->user->id == $user["user_id"])
+            "active" => (bool) (Yii::app()->user->id == $user["user_id"])
         ];
       }
 
@@ -268,6 +302,13 @@ class ManageController extends Auth {
       if (!$model->save()) {
         throw new Exception("La operación no pudo completarse correctamente", 403);
       }
+      
+      new LogEvent("PROJECT_ASSIGN_USERS", $model->project_id, "Retiró al usuario {un} del projecto {pn}",
+        [
+          "pn" => ProjectsQuery::getNameById($model->project_id),
+          "un" => UserQuery::getFullNameByID($model->user_id)
+        ]
+      );
 
       Response::JSON(FALSE, 200, "La operación se completó exitosamente.", compact("data"));
     } catch (Exception $ex) {

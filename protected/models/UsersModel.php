@@ -10,6 +10,9 @@
  * @property string $user_firstname
  * @property string $user_lastname
  * @property string $user_email
+ * @property string $user_phone
+ * @property string $user_gender
+ * @property string $user_birthdate
  * @property string $user_date_registered
  * @property string $user_date_updated
  * @property string $user_date_validated
@@ -18,6 +21,12 @@
  * @property string $user_img_profile
  * @property integer $user_status
  * @property integer $status
+ *
+ * The followings are the available model relations:
+ * @property NavigationFavorites[] $navigationFavorites
+ * @property ProjectUsers[] $projectUsers
+ * @property UserRoles[] $userRoles
+ * @property UserSessions[] $userSessions
  */
 class UsersModel extends CActiveRecord
 {
@@ -37,16 +46,17 @@ class UsersModel extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_username, user_password, user_firstname, user_lastname, user_email', 'required'),
+			array('user_username, user_password, user_firstname, user_lastname, user_email, user_phone, user_gender, user_birthdate', 'required'),
 			array('user_must_change_password, user_status, status', 'numerical', 'integerOnly'=>true),
-			array('user_username, user_email', 'length', 'max'=>50),
+			array('user_username, user_email, user_phone', 'length', 'max'=>50),
 			array('user_password, user_firstname', 'length', 'max'=>100),
 			array('user_lastname', 'length', 'max'=>200),
+			array('user_gender', 'length', 'max'=>1),
 			array('user_img_profile', 'length', 'max'=>255),
 			array('user_date_registered, user_date_updated, user_date_validated, user_date_lastlogin', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user_id, user_username, user_password, user_firstname, user_lastname, user_email, user_date_registered, user_date_updated, user_date_validated, user_date_lastlogin, user_must_change_password, user_img_profile, user_status, status', 'safe', 'on'=>'search'),
+			array('user_id, user_username, user_password, user_firstname, user_lastname, user_email, user_phone, user_gender, user_birthdate, user_date_registered, user_date_updated, user_date_validated, user_date_lastlogin, user_must_change_password, user_img_profile, user_status, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,6 +68,10 @@ class UsersModel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'navigationFavorites' => array(self::HAS_MANY, 'NavigationFavorites', 'user_id'),
+			'projectUsers' => array(self::HAS_MANY, 'ProjectUsers', 'user_id'),
+			'userRoles' => array(self::HAS_MANY, 'UserRoles', 'user_id'),
+			'userSessions' => array(self::HAS_MANY, 'UserSessions', 'user_id'),
 		);
 	}
 
@@ -73,6 +87,9 @@ class UsersModel extends CActiveRecord
 			'user_firstname' => 'User Firstname',
 			'user_lastname' => 'User Lastname',
 			'user_email' => 'User Email',
+			'user_phone' => 'User Phone',
+			'user_gender' => 'User Gender',
+			'user_birthdate' => 'User Birthdate',
 			'user_date_registered' => 'User Date Registered',
 			'user_date_updated' => 'User Date Updated',
 			'user_date_validated' => 'User Date Validated',
@@ -108,6 +125,9 @@ class UsersModel extends CActiveRecord
 		$criteria->compare('user_firstname',$this->user_firstname,true);
 		$criteria->compare('user_lastname',$this->user_lastname,true);
 		$criteria->compare('user_email',$this->user_email,true);
+		$criteria->compare('user_phone',$this->user_phone,true);
+		$criteria->compare('user_gender',$this->user_gender,true);
+		$criteria->compare('user_birthdate',$this->user_birthdate,true);
 		$criteria->compare('user_date_registered',$this->user_date_registered,true);
 		$criteria->compare('user_date_updated',$this->user_date_updated,true);
 		$criteria->compare('user_date_validated',$this->user_date_validated,true);

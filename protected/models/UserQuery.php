@@ -32,6 +32,14 @@ class UserQuery {
         ->where("u.user_id = :id", [":id" => $id])
         ->queryRow();
   }
+  
+  public static function getFullNameByID($id) {
+    return Yii::app()->db->createCommand()
+        ->select("concat(u.user_firstname,' ',u.user_lastname) as user_fullname")
+        ->from("users u")
+        ->where("u.user_id = :id and status = 1", [":id" => $id])
+        ->queryScalar();
+  }
 
   public static function getByEmail($email) {
     return Yii::app()->db->createCommand()
@@ -137,8 +145,10 @@ class UserQuery {
   }
 
   public static function createSession($params) {
-    return Yii::app()->db->createCommand()
-        ->insert("user_sessions", $params);
+    $model = new UserSessionsModel;
+    $model->setAttributes($params);
+    $model->save();
+    return $model;
   }
 
   public static function closeSession($user_id, $token) {

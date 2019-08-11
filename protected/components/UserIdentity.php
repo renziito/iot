@@ -54,6 +54,7 @@ class UserIdentity extends CUserIdentity {
           $this->_id       = $validate["user_id"];
           $this->setState("firstname", $userInfo["user_firstname"]);
           $this->setState("fullname", "{$userInfo["user_firstname"]} {$userInfo["user_lastname"]}");
+          $this->setState("session_ID", $session->usersession_id);
           $this->setState("account_ID", $account_ID);
           $this->setState("sudo", $sudo);
           $this->setState("lastname", $userInfo["user_lastname"]);

@@ -14,7 +14,7 @@ class Assets extends AssetsBundle {
       "user" => [
           "js"      => ["user.js"],
           "css"     => [],
-          "depends" => ["jquery-validation", "alertPlugin"],
+          "depends" => ["jquery-validation", "alertPlugin", "datepiker"],
       ]
   ];
   public $action     = [

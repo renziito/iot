@@ -6,22 +6,24 @@ $this->breadcrumbs = [
 ?>
 
 <div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-block">
-        <h4 class="mb-0">Administradores</h4>
-        <div class="text-right mb-4">
-          <button id="btnAddUserAdmin" class="btn btn-default">
-            <i class="fa fa-plus"></i>
-            Agregar Administrador
-          </button>
-        </div>
-        <div class="table-responsive">
-          <table class="table" id="tbProjectAssignedUsersAdmin"></table>
+  <?php if (Yii::app()->user->sudo): ?>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-block">
+          <h4 class="mb-0">Administradores</h4>
+          <div class="text-right mb-4">
+            <button id="btnAddUserAdmin" class="btn btn-default">
+              <i class="fa fa-plus"></i>
+              Agregar Administrador
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table class="table" id="tbProjectAssignedUsersAdmin"></table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <?php endif; ?>
   <div class="col-12">
     <div class="card">
       <div class="card-block">

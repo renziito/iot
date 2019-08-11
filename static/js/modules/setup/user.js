@@ -8,7 +8,7 @@ var UserFormValidate = function (form) {
   this.rules = {};
   this.messages = {};
   this.$form = form;
-  
+
   this.init();
 };
 
@@ -95,6 +95,12 @@ UserFormValidate.prototype.validate = function (submitHandler = false) {
 UserFormValidate.prototype.init = function () {
   this._rulesDefault();
   this._messagesDefault();
+  this.$form.find("#UsersModel_user_birthdate").datepicker({
+    format: "yyyy-mm-dd",
+    language: "es",
+    startView: 2,
+    autoclose: true
+  });
 };
 
 /* ============================================================
@@ -115,8 +121,8 @@ UserEvents.prototype.update = function (id, data, url, callbackSuccess, callback
   var callbackSuccess = callbackSuccess || false;
   var callbackError = callbackError || false;
   var nameDefault = nameDefault || true;
-  
-  $.post(this.url[url] + '/id/'+id, data, (response) => {
+
+  $.post(this.url[url] + '/id/' + id, data, (response) => {
     if (!response.error) {
       Notify("success", response.message);
       if (callbackSuccess)
@@ -184,7 +190,7 @@ UserEvents.prototype.resetPassword = function (id, data, callbackSuccess = false
     text: `¿Está seguro que desea reestableser la contraseña?`,
     cancelButtonText: "No, cancelar",
     confirmButtonText: "Si, estoy seguro"
-  }, function(){
+  }, function () {
     _class.update(id, data, 'password', callbackSuccess, callbackError, false);
   });
 };
