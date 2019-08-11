@@ -3,7 +3,7 @@
 class OverviewController extends Auth {
 
   public function actionIndex() {
-    $this->current_title = "Listado de Proyectos";
+    $this->current_title = "Listado de Listas";
     $this->render("index");
   }
 
@@ -12,13 +12,13 @@ class OverviewController extends Auth {
       if (!Yii::app()->request->isAjaxRequest)
         throw new Exception("Metodo no permitido", 403);
 
-      $data   = ProjectsQuery::getAll();
+      $data   = ListsQuery::getAll();
       $update = $update = $device = $users  = $delete = true;
       if (!Yii::app()->user->sudo) {
-        $update = (bool) (Yii::app()->user->checkAccess(["PROJECT_UPDATE"]));
-        $device = (bool) (Yii::app()->user->checkAccess(["PROJECT_ASSIGN_DEVICES"]));
-        $users  = (bool) (Yii::app()->user->checkAccess(["PROJECT_ASSIGN_USERS"]));
-        $delete = (bool) (Yii::app()->user->checkAccess(["PROJECT_DELETE"]));
+        $update = (bool) (Yii::app()->user->checkAccess(["LIST_UPDATE"]));
+        $device = (bool) (Yii::app()->user->checkAccess(["LIST_ASSIGN_DEVICES"]));
+        $users  = (bool) (Yii::app()->user->checkAccess(["LIST_ASSIGN_USERS"]));
+        $delete = (bool) (Yii::app()->user->checkAccess(["LIST_DELETE"]));
       }
 
       foreach ($data as $key => $val) {

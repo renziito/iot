@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
         <div class="table-responsive">
-          <table class="table" id="tbProjectUsersAdmin"></table>
+          <table class="table" id="tbListUsersAdmin"></table>
         </div>
       </div>
     </div>

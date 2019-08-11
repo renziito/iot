@@ -1,10 +1,15 @@
 <?php
 $this->breadcrumbs = [
-    "Proyectos" => Yii::app()->createUrl("project"),
-    "Nuevo Proyecto"
+    "Listas" => Yii::app()->createUrl("list"),
+    "Actualizar Lista"
 ];
 ?>
 <div class="row">
+  <div class="col-12">
+    <div class="text-right">
+      <button></button>
+    </div>
+  </div>
   <div class="col-12">
     <div class="card">
       <div class="card-block">

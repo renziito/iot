@@ -1,28 +1,28 @@
 <?php
 
 /**
- * This is the model class for table "project_users".
+ * This is the model class for table "responsables".
  *
- * The followings are the available columns in table 'project_users':
- * @property integer $projectuser_id
- * @property integer $project_id
- * @property integer $role_id
- * @property integer $user_id
+ * The followings are the available columns in table 'responsables':
+ * @property integer $responsable_id
+ * @property string $responsable_name
+ * @property string $responsable_phone
+ * @property string $responsable_position
  * @property integer $status
  *
  * The followings are the available model relations:
- * @property Projects $project
- * @property RbacRoles $role
- * @property Users $user
+ * @property DeviceMaintenances[] $deviceMaintenances
+ * @property DeviceResponsables[] $deviceResponsables
+ * @property ListResponsables[] $listResponsables
  */
-class ProjectUsersModel extends CActiveRecord
+class ResponsablesModel extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'project_users';
+		return 'responsables';
 	}
 
 	/**
@@ -33,11 +33,12 @@ class ProjectUsersModel extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('project_id, role_id, user_id', 'required'),
-			array('project_id, role_id, user_id, status', 'numerical', 'integerOnly'=>true),
+			array('responsable_name', 'required'),
+			array('status', 'numerical', 'integerOnly'=>true),
+			array('responsable_name, responsable_phone, responsable_position', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('projectuser_id, project_id, role_id, user_id, status', 'safe', 'on'=>'search'),
+			array('responsable_id, responsable_name, responsable_phone, responsable_position, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,9 +50,9 @@ class ProjectUsersModel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'project' => array(self::BELONGS_TO, 'Projects', 'project_id'),
-			'role' => array(self::BELONGS_TO, 'RbacRoles', 'role_id'),
-			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
+			'deviceMaintenances' => array(self::HAS_MANY, 'DeviceMaintenances', 'responsable_id'),
+			'deviceResponsables' => array(self::HAS_MANY, 'DeviceResponsables', 'responsable_id'),
+			'listResponsables' => array(self::HAS_MANY, 'ListResponsables', 'responsable_id'),
 		);
 	}
 
@@ -61,10 +62,10 @@ class ProjectUsersModel extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'projectuser_id' => 'Projectuser',
-			'project_id' => 'Project',
-			'role_id' => 'Role',
-			'user_id' => 'User',
+			'responsable_id' => 'Responsable',
+			'responsable_name' => 'Responsable Name',
+			'responsable_phone' => 'Responsable Phone',
+			'responsable_position' => 'Responsable Position',
 			'status' => 'Status',
 		);
 	}
@@ -87,10 +88,10 @@ class ProjectUsersModel extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('projectuser_id',$this->projectuser_id);
-		$criteria->compare('project_id',$this->project_id);
-		$criteria->compare('role_id',$this->role_id);
-		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('responsable_id',$this->responsable_id);
+		$criteria->compare('responsable_name',$this->responsable_name,true);
+		$criteria->compare('responsable_phone',$this->responsable_phone,true);
+		$criteria->compare('responsable_position',$this->responsable_position,true);
 		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
@@ -102,7 +103,7 @@ class ProjectUsersModel extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ProjectUsersModel the static model class
+	 * @return ResponsablesModel the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

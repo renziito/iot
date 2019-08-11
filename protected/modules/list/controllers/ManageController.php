@@ -8,10 +8,10 @@ class ManageController extends Auth {
 
   public function actionCreate() {
     $this->container_fluid = false;
-    $this->current_title   = "Crear Proyecto";
+    $this->current_title   = "Crear Lista";
 
-    $model = new ProjectsModel;
-    if ($post  = Yii::app()->request->getPost("ProjectsModel")) {
+    $model = new ListsModel;
+    if ($post  = Yii::app()->request->getPost("ListsModel")) {
       $transaction = Yii::app()->db->beginTransaction();
       try {
         $model->setAttributes($post);
@@ -19,33 +19,33 @@ class ManageController extends Auth {
         if (!$model->save()) {
           throw new Exception("No se pudo completar la operación");
         }
-        
-        new LogEvent("PROJECT_CREATE", $model->project_id, "Creó el proyecto {pn}",
+
+        new LogEvent("LIST_CREATE", $model->list_id, "Creó la lista {ln}",
           [
-            "pn" => $model->project_name
+            "ln" => $model->list_name
           ]
         );
-        
+
         $transaction->commit();
         Yii::app()->user->setFlash("success", "La operación se completó exitosamente.");
-        $this->redirect(Yii::app()->createUrl("project"));
+        $this->redirect(Yii::app()->createUrl("list"));
       } catch (Exception $ex) {
         $transaction->rollback();
         Yii::app()->user->setFlash("danger", "{$ex->getCode()}: {$ex->getMessage()}");
-        $this->redirect(Yii::app()->createUrl("project/manage/create"));
+        $this->redirect(Yii::app()->createUrl("list/manage/create"));
       }
     }
     $this->render("create", compact("model"));
   }
 
   public function actionUpdate($id) {
-    $model = ProjectsModel::model()->findByPk($id);
+    $model = ListsModel::model()->findByPk($id);
 
-    if (!$model || !ProjectsQuery::isAdmin($model->project_id)) {
+    if (!$model || !ListsQuery::isAdmin($model->list_id)) {
       throw new CHttpException(404, "Página no encontrada");
     }
 
-    if ($post = Yii::app()->request->getPost("ProjectsModel")) {
+    if ($post = Yii::app()->request->getPost("ListsModel")) {
       $transaction = Yii::app()->db->beginTransaction();
       try {
         $model->setAttributes($post);
@@ -54,24 +54,24 @@ class ManageController extends Auth {
           throw new Exception("No se pudo completar la operación");
         }
 
-        new LogEvent("PROJECT_UPDATE", $model->project_id, "Actualizó el proyecto {pn}",
+        new LogEvent("LIST_UPDATE", $model->list_id, "Actualizó la lista {ln}",
           [
-            "pn" => $model->project_name
+            "ln" => $model->list_name
           ]
         );
 
         $transaction->commit();
         Yii::app()->user->setFlash("success", "La operación se completó exitosamente.");
-        $this->redirect(Yii::app()->createUrl("project"));
+        $this->redirect(Yii::app()->createUrl("list"));
       } catch (Exception $ex) {
         $transaction->rollback();
         Yii::app()->user->setFlash("danger", "{$ex->getCode()}: {$ex->getMessage()}");
-        $this->redirect(Yii::app()->createUrl("project/manage/update"));
+        $this->redirect(Yii::app()->createUrl("list/manage/update"));
       }
     }
 
     $this->container_fluid = false;
-    $this->current_title   = $model->project_name;
+    $this->current_title   = $model->list_name;
 
     $this->render("update", compact("model"));
   }
@@ -84,9 +84,9 @@ class ManageController extends Auth {
       if (!$id = Yii::app()->request->getPost("id"))
         throw new Exception("Metodo no permitido", 403);
 
-      $model = ProjectsModel::model()->findByPk($id);
+      $model = ListsModel::model()->findByPk($id);
 
-      if (!$model || !ProjectsQuery::isAdmin($model->project_id))
+      if (!$model || !ListsQuery::isAdmin($model->list_id))
         throw new Exception("Metodo no permitido", 403);
 
       $model->status = Globals::STATUS_INACTIVE;
@@ -94,9 +94,9 @@ class ManageController extends Auth {
       if (!$model->save())
         throw new Exception("La operación no pudo completarse correctamente", 500);
 
-      new LogEvent("PROJECT_UPDATE", $model->project_id, "Eliminó el proyecto {pn}",
+      new LogEvent("LIST_UPDATE", $model->list_id, "Eliminó la lista {ln}",
         [
-          "pn" => $model->project_name
+          "ln" => $model->list_name
         ]
       );
 
@@ -107,9 +107,9 @@ class ManageController extends Auth {
   }
 
   public function actionUsers($id) {
-    $model = ProjectsModel::model()->findByPk($id);
+    $model = ListsModel::model()->findByPk($id);
 
-    if (!$model || !ProjectsQuery::isAdmin($model->project_id)) {
+    if (!$model || !ListsQuery::isAdmin($model->list_id)) {
       throw new CHttpException(404, "Página no encontrada");
     }
 
@@ -120,9 +120,9 @@ class ManageController extends Auth {
   }
 
   public function actionDevices($id) {
-    $model = ProjectsModel::model()->findByPk($id);
+    $model = ListsModel::model()->findByPk($id);
 
-    if (!$model || !ProjectsQuery::isAdmin($model->project_id)) {
+    if (!$model || !ListsQuery::isAdmin($model->list_id)) {
       throw new CHttpException(404, "Página no encontrada");
     }
 
@@ -137,7 +137,7 @@ class ManageController extends Auth {
       if (!Yii::app()->request->isAjaxRequest)
         throw new Exception("Metodo no permitido", 403);
 
-      $users = UserQuery::getAllUnassignedProjectByRole(RolesQuery::getIdByKey("ADMIN"), $id);
+      $users = UserQuery::getAllUnassignedListByRole(RolesQuery::getIdByKey("ADMIN"), $id);
       $data  = [];
 
       foreach ($users as $user) {
@@ -160,7 +160,7 @@ class ManageController extends Auth {
       if (!Yii::app()->request->isAjaxRequest)
         throw new Exception("Metodo no permitido", 403);
 
-      $users = UserQuery::getAllUnassignedProjectByRole(RolesQuery::getIdByKey("VISOR"), $id);
+      $users = UserQuery::getAllUnassignedListByRole(RolesQuery::getIdByKey("VISOR"), $id);
       $data  = [];
 
       foreach ($users as $user) {
@@ -186,19 +186,19 @@ class ManageController extends Auth {
       if (!$post = Yii::app()->request->getPost("adduser"))
         throw new Exception("Metodo no permitido", 403);
 
-      $model = new ProjectUsersModel;
+      $model = new ListUsersModel;
 
-      $model->user_id    = $post["user_id"];
-      $model->project_id = $post["project_id"];
-      $model->role_id    = RolesQuery::getIdByKey("ADMIN");
+      $model->user_id = $post["user_id"];
+      $model->list_id = $post["list_id"];
+      $model->role_id = RolesQuery::getIdByKey("ADMIN");
 
       if (!$model->save()) {
         throw new Exception("La operación no pudo completarse correctamente", 403);
       }
-      
-      new LogEvent("PROJECT_ASSIGN_USERS", $model->project_id, "Agregó al usuario {un} como administrador al projecto {pn}",
+
+      new LogEvent("LIST_ASSIGN_USERS", $model->list_id, "Agregó al usuario {un} como administrador al listo {ln}",
         [
-          "pn" => ProjectsQuery::getNameById($model->project_id),
+          "ln" => ListsQuery::getNameById($model->list_id),
           "un" => UserQuery::getFullNameByID($model->user_id)
         ]
       );
@@ -217,23 +217,23 @@ class ManageController extends Auth {
       if (!$post = Yii::app()->request->getPost("adduser"))
         throw new Exception("Metodo no permitido", 403);
 
-      $model = new ProjectUsersModel;
+      $model = new ListUsersModel;
 
-      $model->user_id    = $post["user_id"];
-      $model->project_id = $post["project_id"];
-      $model->role_id    = RolesQuery::getIdByKey("VISOR");
+      $model->user_id = $post["user_id"];
+      $model->list_id = $post["list_id"];
+      $model->role_id = RolesQuery::getIdByKey("VISOR");
 
       if (!$model->save()) {
         throw new Exception("La operación no pudo completarse correctamente", 403);
       }
-      
-      new LogEvent("PROJECT_ASSIGN_USERS", $model->project_id, "Agregó al usuario {un} como visualizador al projecto {pn}",
+
+      new LogEvent("LIST_ASSIGN_USERS", $model->list_id, "Agregó al usuario {un} como visualizador al listo {ln}",
         [
-          "pn" => ProjectsQuery::getNameById($model->project_id),
+          "ln" => ListsQuery::getNameById($model->list_id),
           "un" => UserQuery::getFullNameByID($model->user_id)
         ]
       );
-      
+
       Response::JSON(FALSE, 200, "La operación se completó exitosamente.", compact("data"));
     } catch (Exception $ex) {
       Response::Error($ex);
@@ -245,12 +245,12 @@ class ManageController extends Auth {
       if (!Yii::app()->request->isAjaxRequest)
         throw new Exception("Metodo no permitido", 403);
 
-      $users = ProjectsQuery::getAllAssignedUsersByRole($id, RolesQuery::getIdByKey("ADMIN"));
+      $users = ListsQuery::getAllAssignedUsersByRole($id, RolesQuery::getIdByKey("ADMIN"));
       $data  = [];
 
       foreach ($users as $user) {
         $data[] = [
-            "id"     => $user["projectuser_id"],
+            "id"     => $user["listuser_id"],
             "name"   => "{$user["user_firstname"]} {$user["user_lastname"]}",
             "email"  => $user["user_email"],
             "img"    => $user["user_img_profile"],
@@ -269,12 +269,12 @@ class ManageController extends Auth {
       if (!Yii::app()->request->isAjaxRequest)
         throw new Exception("Metodo no permitido", 403);
 
-      $users = ProjectsQuery::getAllAssignedUsersByRole($id, RolesQuery::getIdByKey("VISOR"));
+      $users = ListsQuery::getAllAssignedUsersByRole($id, RolesQuery::getIdByKey("VISOR"));
       $data  = [];
 
       foreach ($users as $user) {
         $data[] = [
-            "id"    => $user["projectuser_id"],
+            "id"    => $user["listuser_id"],
             "name"  => "{$user["user_firstname"]} {$user["user_lastname"]}",
             "email" => $user["user_email"],
             "img"   => $user["user_img_profile"],
@@ -295,17 +295,17 @@ class ManageController extends Auth {
       if (!$post = Yii::app()->request->getPost("removeuser"))
         throw new Exception("Metodo no permitido", 403);
 
-      $model = ProjectUsersModel::model()->findByPk($post["id"]);
+      $model = ListUsersModel::model()->findByPk($post["id"]);
 
       $model->status = Globals::STATUS_INACTIVE;
 
       if (!$model->save()) {
         throw new Exception("La operación no pudo completarse correctamente", 403);
       }
-      
-      new LogEvent("PROJECT_ASSIGN_USERS", $model->project_id, "Retiró al usuario {un} del projecto {pn}",
+
+      new LogEvent("LIST_ASSIGN_USERS", $model->list_id, "Retiró al usuario {un} del listo {ln}",
         [
-          "pn" => ProjectsQuery::getNameById($model->project_id),
+          "ln" => ListsQuery::getNameById($model->list_id),
           "un" => UserQuery::getFullNameByID($model->user_id)
         ]
       );

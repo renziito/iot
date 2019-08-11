@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs = [
-    "Proyectos" => Yii::app()->createUrl("project"),
-    $model->project_name
+    "Listas" => Yii::app()->createUrl("list"),
+    $model->list_name
 ];
 ?>
 
@@ -18,7 +18,7 @@ $this->breadcrumbs = [
             </button>
           </div>
           <div class="table-responsive">
-            <table class="table" id="tbProjectAssignedUsersAdmin"></table>
+            <table class="table" id="tbListAssignedUsersAdmin"></table>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ $this->breadcrumbs = [
           </button>
         </div>
         <div class="table-responsive">
-          <table class="table" id="tbProjectAssignedUsersVisor"></table>
+          <table class="table" id="tbListAssignedUsersVisor"></table>
         </div>
       </div>
     </div>

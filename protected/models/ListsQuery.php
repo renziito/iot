@@ -1,54 +1,54 @@
 <?php
 
-class ProjectsQuery {
+class ListsQuery {
 
   public static function getAll() {
     $command = Yii::app()->db->createCommand()
       ->select("
-          p.project_name as name
-          ,p.project_code as code
-          ,p.project_resumen as description
-          ,p.project_id as id
+          l.list_name as name
+          ,l.list_code as code
+          ,l.list_resumen as description
+          ,l.list_id as id
           ")
-      ->from("projects p");
+      ->from("lists l");
 
     if (!Yii::app()->user->sudo) {
       $user_id = Yii::app()->user->id;
       $role_id = RolesQuery::getIdByKey("ADMIN");
-      $command->join("project_users pu", "pu.project_id = p.project_id and pu.user_id = :user_id and pu.status = 1 and pu.role_id = :role_id", [
+      $command->join("list_users lu", "lu.list_id = l.list_id and lu.user_id = :user_id and lu.status = 1 and lu.role_id = :role_id", [
           ":user_id" => $user_id,
           ":role_id" => $role_id
       ]);
     }
-    $command->where("p.status = 1");
+    $command->where("l.status = 1");
 
 
     return $command->queryAll();
   }
 
-  public static function getNameById($project_id) {
+  public static function getNameById($list_id) {
     return Yii::app()->db->createCommand()
-        ->select("project_name")
-        ->from("projects pu")
-        ->where("pu.project_id = :id and pu.status = 1", [
-            ":id" => $project_id
+        ->select("list_name")
+        ->from("lists lu")
+        ->where("lu.list_id = :id and lu.status = 1", [
+            ":id" => $list_id
         ])
         ->queryScalar();
   }
 
-  public static function getAllAssignedUsersByRole($project_id, $role_id) {
+  public static function getAllAssignedUsersByRole($list_id, $role_id) {
     return Yii::app()->db->createCommand()
         ->select()
-        ->from("project_users pu")
-        ->join("vw_user vu", "vu.user_id = pu.user_id")
-        ->where("pu.project_id = :id and pu.role_id = :role_id and pu.status = 1", [
-            ":id"      => $project_id,
+        ->from("list_users lu")
+        ->join("vw_user vu", "vu.user_id = lu.user_id")
+        ->where("lu.list_id = :id and lu.role_id = :role_id and lu.status = 1", [
+            ":id"      => $list_id,
             ":role_id" => $role_id
         ])
         ->queryAll();
   }
 
-  public static function isAdmin($project_id) {
+  public static function isAdmin($list_id) {
 
     if (Yii::app()->user->sudo) {
       return true;
@@ -58,10 +58,10 @@ class ProjectsQuery {
     $role_id = RolesQuery::getIdByKey("ADMIN");
 
     $command = Yii::app()->db->createCommand()
-      ->select("project_id")
-      ->from("project_users")
-      ->where("status = 1 and project_id = :project_id and role_id = :role_id and user_id = :user_id", [
-          ":project_id" => $project_id,
+      ->select("list_id")
+      ->from("list_users")
+      ->where("status = 1 and list_id = :list_id and role_id = :role_id and user_id = :user_id", [
+          ":list_id" => $list_id,
           ":user_id"    => $user_id,
           ":role_id"    => $role_id
       ])
@@ -79,13 +79,13 @@ class ProjectsQuery {
     $status->error = false;
 
     try {
-      $projects = self::getAll();
+      $lists = self::getAll();
 
-      foreach ($projects as $project) {
-        $model = new ProjectUsersModel;
+      foreach ($lists as $list) {
+        $model = new ListUsersModel;
 
         $model->user_id    = $user_id;
-        $model->project_id = $project["id"];
+        $model->list_id = $list["id"];
         $model->role_id    = RolesQuery::getIdByKey("ADMIN");
 
         if (!$model->save()) {
@@ -106,14 +106,14 @@ class ProjectsQuery {
     $status->error = false;
 
     try {
-      $projects = ProjectUsersModel::model()->updateAll([
+      $lists = ListUsersModel::model()->updateAll([
           "status" => Globals::STATUS_INACTIVE
         ], "user_id = :user_id and role_id = :role_id and status = 1", [
           ":user_id" => $user_id,
           ":role_id" => $role_id
       ]);
 
-      if (!is_null($projects) || $projects === FALSE) {
+      if (!is_null($lists) || $lists === FALSE) {
         throw new Exception("La operación no pudo completarse correctamente", 500);
       }
     } catch (Exception $ex) {

@@ -24,7 +24,7 @@
  *
  * The followings are the available model relations:
  * @property NavigationFavorites[] $navigationFavorites
- * @property ProjectUsers[] $projectUsers
+ * @property ProjectUsers[] $listUsers
  * @property UserRoles[] $userRoles
  * @property UserSessions[] $userSessions
  */
@@ -69,7 +69,7 @@ class UsersModel extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'navigationFavorites' => array(self::HAS_MANY, 'NavigationFavorites', 'user_id'),
-			'projectUsers' => array(self::HAS_MANY, 'ProjectUsers', 'user_id'),
+			'listUsers' => array(self::HAS_MANY, 'ProjectUsers', 'user_id'),
 			'userRoles' => array(self::HAS_MANY, 'UserRoles', 'user_id'),
 			'userSessions' => array(self::HAS_MANY, 'UserSessions', 'user_id'),
 		);

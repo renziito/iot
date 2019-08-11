@@ -60,7 +60,7 @@ class UserController extends Auth {
           throw new Exception("No se pudo crear el usuario {$model->user_username}", 500);
 
         if ($modelRole->role_id == RolesQuery::getIdByKey("ADMIN")) {
-          ProjectsQuery::asignedAdminitratorToAll($model->user_id);
+          ListsQuery::asignedAdminitratorToAll($model->user_id);
         }
 
         $transaction->commit();
@@ -143,10 +143,10 @@ class UserController extends Auth {
           if (!$modelUserRole->save())
             throw new Exception("No se pudo actualizar el usuario {$model->user_username}", 500);
 
-          ProjectsQuery::unasignedToAllByRole($model->user_id, $modelRole->role_id);
+          ListsQuery::unasignedToAllByRole($model->user_id, $modelRole->role_id);
 
           if ($modelUserRole->role_id == RolesQuery::getIdByKey("ADMIN")) {
-            ProjectsQuery::asignedAdminitratorToAll($model->user_id);
+            ListsQuery::asignedAdminitratorToAll($model->user_id);
           }
         }
 

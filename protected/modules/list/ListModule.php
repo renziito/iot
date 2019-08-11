@@ -3,7 +3,7 @@
  * @package UPCH\Modules
  */
 
-class ProjectModule extends CWebModule
+class ListModule extends CWebModule
 {
 	public function init()
 	{
@@ -12,8 +12,8 @@ class ProjectModule extends CWebModule
 
 		// import the module-level models and components
 		$this->setImport(array(
-			'project.models.*',
-			'project.components.*',
+			'list.models.*',
+			'list.components.*',
 		));
 	}
 

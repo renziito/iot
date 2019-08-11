@@ -1,28 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "projects".
+ * This is the model class for table "device_responsables".
  *
- * The followings are the available columns in table 'projects':
- * @property integer $project_id
- * @property string $project_code
- * @property string $project_name
- * @property string $project_resumen
- * @property integer $project_status
+ * The followings are the available columns in table 'device_responsables':
+ * @property integer $deviceresponsable_id
+ * @property integer $device_id
+ * @property integer $responsable_id
  * @property integer $status
  *
  * The followings are the available model relations:
- * @property ProjectDevices[] $projectDevices
- * @property ProjectUsers[] $projectUsers
+ * @property Devices $device
+ * @property Responsables $responsable
  */
-class ProjectsModel extends CActiveRecord
+class DeviceResponsablesModel extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'projects';
+		return 'device_responsables';
 	}
 
 	/**
@@ -33,14 +31,11 @@ class ProjectsModel extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('project_code, project_name', 'required'),
-			array('project_status, status', 'numerical', 'integerOnly'=>true),
-			array('project_code', 'length', 'max'=>10),
-			array('project_name', 'length', 'max'=>255),
-			array('project_resumen', 'safe'),
+			array('device_id, responsable_id', 'required'),
+			array('device_id, responsable_id, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('project_id, project_code, project_name, project_resumen, project_status, status', 'safe', 'on'=>'search'),
+			array('deviceresponsable_id, device_id, responsable_id, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,8 +47,8 @@ class ProjectsModel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'projectDevices' => array(self::HAS_MANY, 'ProjectDevices', 'project_id'),
-			'projectUsers' => array(self::HAS_MANY, 'ProjectUsers', 'project_id'),
+			'device' => array(self::BELONGS_TO, 'Devices', 'device_id'),
+			'responsable' => array(self::BELONGS_TO, 'Responsables', 'responsable_id'),
 		);
 	}
 
@@ -63,11 +58,9 @@ class ProjectsModel extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'project_id' => 'Project',
-			'project_code' => 'Project Code',
-			'project_name' => 'Project Name',
-			'project_resumen' => 'Project Resumen',
-			'project_status' => 'Project Status',
+			'deviceresponsable_id' => 'Deviceresponsable',
+			'device_id' => 'Device',
+			'responsable_id' => 'Responsable',
 			'status' => 'Status',
 		);
 	}
@@ -90,11 +83,9 @@ class ProjectsModel extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('project_id',$this->project_id);
-		$criteria->compare('project_code',$this->project_code,true);
-		$criteria->compare('project_name',$this->project_name,true);
-		$criteria->compare('project_resumen',$this->project_resumen,true);
-		$criteria->compare('project_status',$this->project_status);
+		$criteria->compare('deviceresponsable_id',$this->deviceresponsable_id);
+		$criteria->compare('device_id',$this->device_id);
+		$criteria->compare('responsable_id',$this->responsable_id);
 		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
@@ -106,7 +97,7 @@ class ProjectsModel extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ProjectsModel the static model class
+	 * @return DeviceResponsablesModel the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

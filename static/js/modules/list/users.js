@@ -1,14 +1,14 @@
 (function ($) {
   'use strict';
 
-  var ProjectUsers = function () {
+  var ListUsers = function () {
     this.config = $.extend(true, APP, {});
     this.id = Request._GET.id;
-    this.tableAssignedUsersAdmin = new TablePlugin("table#tbProjectAssignedUsersAdmin");
-    this.tableAssignedUsersAdmin = new TablePlugin("table#tbProjectAssignedUsersAdmin");
+    this.tableAssignedUsersAdmin = new TablePlugin("table#tbListAssignedUsersAdmin");
+    this.tableAssignedUsersAdmin = new TablePlugin("table#tbListAssignedUsersAdmin");
     this.tableUsersAdmin = false;
     this.tableUsersVisor = false;
-    this.tableAssignedUsersVisor = new TablePlugin("table#tbProjectAssignedUsersVisor");
+    this.tableAssignedUsersVisor = new TablePlugin("table#tbListAssignedUsersVisor");
     this.$btnAddUserAdmin = $("#btnAddUserAdmin");
     this.$btnAddUserVisor = $("#btnAddUserVisor");
     this.$modalAddUserAdmin = $("#md-add-user-admin");
@@ -24,21 +24,21 @@
     };
   };
 
-  ProjectUsers.prototype._openModal = function (modal) {
+  ListUsers.prototype._openModal = function (modal) {
     modal.modal("show");
   };
 
-  ProjectUsers.prototype._closeModal = function (modal) {
+  ListUsers.prototype._closeModal = function (modal) {
     modal.modal("hide");
   };
 
-  ProjectUsers.prototype._addUser = function (url, user_id) {
+  ListUsers.prototype._addUser = function (url, user_id) {
     var _class = this;
 
     return new Promise(function (resolve, reject) {
       $.post(url, {
         adduser: {
-          project_id: _class.id,
+          list_id: _class.id,
           user_id: user_id
         }
       }, function (response) {
@@ -53,13 +53,13 @@
     });
   };
 
-  ProjectUsers.prototype._removeUser = function (projectuser_id) {
+  ListUsers.prototype._removeUser = function (listuser_id) {
     var _class = this;
 
     return new Promise(function (resolve, reject) {
       $.post(_class.url.unassignedUser, {
         removeuser: {
-          id: projectuser_id
+          id: listuser_id
         }
       }, function (response) {
         if (!response.error) {
@@ -73,7 +73,7 @@
     });
   };
 
-  ProjectUsers.prototype._initModalAddUserAdmin = function () {
+  ListUsers.prototype._initModalAddUserAdmin = function () {
     var _class = this;
 
     this.$btnAddUserAdmin.on('click', function (e) {
@@ -91,7 +91,7 @@
 
   };
   
-  ProjectUsers.prototype._initModalAddUserVisor = function () {
+  ListUsers.prototype._initModalAddUserVisor = function () {
     var _class = this;
 
     this.$btnAddUserVisor.on('click', function (e) {
@@ -109,10 +109,10 @@
 
   };
 
-  ProjectUsers.prototype._initTableUsersAdmin = function () {
+  ListUsers.prototype._initTableUsersAdmin = function () {
     var _class = this;
 
-    this.tableUsersAdmin = new TablePlugin("table#tbProjectUsersAdmin");
+    this.tableUsersAdmin = new TablePlugin("table#tbListUsersAdmin");
     this.tableUsersAdmin.setOptions({
       url: this.url.listUsersAdmin
     });
@@ -162,10 +162,10 @@
     this.tableUsersAdmin.init();
   };
   
-  ProjectUsers.prototype._initTableUsersVisor = function () {
+  ListUsers.prototype._initTableUsersVisor = function () {
     var _class = this;
 
-    this.tableUsersVisor = new TablePlugin("table#tbProjectUsersVisor");
+    this.tableUsersVisor = new TablePlugin("table#tbListUsersVisor");
     this.tableUsersVisor.setOptions({
       url: this.url.listUsersVisor
     });
@@ -215,7 +215,7 @@
     this.tableUsersVisor.init();
   };
 
-  ProjectUsers.prototype._initTableAssigneUsersAdmin = function () {
+  ListUsers.prototype._initTableAssigneUsersAdmin = function () {
     var _class = this;
 
     this.tableAssignedUsersAdmin.setOptions({
@@ -270,7 +270,7 @@
     this.tableAssignedUsersAdmin.init();
   };
 
-  ProjectUsers.prototype._initTableAssigneUsersVisor = function () {
+  ListUsers.prototype._initTableAssigneUsersVisor = function () {
     var _class = this;
 
     this.tableAssignedUsersVisor.setOptions({
@@ -321,14 +321,14 @@
     this.tableAssignedUsersVisor.init();
   };
 
-  ProjectUsers.prototype.init = function () {
+  ListUsers.prototype.init = function () {
     this._initModalAddUserAdmin();
     this._initModalAddUserVisor();
     this._initTableAssigneUsersAdmin();
     this._initTableAssigneUsersVisor();
   };
 
-  (new ProjectUsers()).init();
+  (new ListUsers()).init();
 
 })(window.jQuery);
 

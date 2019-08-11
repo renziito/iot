@@ -1,13 +1,13 @@
 (function ($) {
   'use strict';
 
-  var ProjectManage = function () {
+  var ListManage = function () {
     this.config = $.extend(true, APP, {});
     this.alert = new AlertPlugin();
-    this.$form = $("#form-project");
+    this.$form = $("#form-list");
   };
 
-  ProjectManage.prototype.initForm = function () {
+  ListManage.prototype.initForm = function () {
     var _class = this;
     this.$form.validate({
       submitHandler: function (form) {
@@ -20,20 +20,20 @@
         });
       },
       rules: {
-        "ProjectsModel[project_name]": {
+        "ListsModel[list_name]": {
           required: true
         },
-        "ProjectsModel[project_code]": {
+        "ListsModel[list_code]": {
           required: true
         }
       }
     });
   };
 
-  ProjectManage.prototype.init = function () {
+  ListManage.prototype.init = function () {
     this.initForm();
   };
 
-  (new ProjectManage()).init();
+  (new ListManage()).init();
 
 })(window.jQuery);

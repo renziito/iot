@@ -14,13 +14,13 @@ class UserQuery {
         ->queryAll();
   }
 
-  public static function getAllUnassignedProjectByRole($role_id, $project_id) {
+  public static function getAllUnassignedListByRole($role_id, $list_id) {
     return Yii::app()->db->createCommand()
         ->select()
         ->from("vw_user u")
-        ->where("u.role_id = :role_id and u.user_id not in (select user_id from project_users pu where pu.project_id = :project_id and pu.status = 1)", [
+        ->where("u.role_id = :role_id and u.user_id not in (select user_id from list_users lu where lu.list_id = :list_id and lu.status = 1)", [
             ":role_id"    => $role_id,
-            ":project_id" => $project_id
+            ":list_id" => $list_id
         ])
         ->queryAll();
   }

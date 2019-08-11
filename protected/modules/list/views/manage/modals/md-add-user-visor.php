@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
         <div class="table-responsive">
-          <table class="table" id="tbProjectUsersVisor"></table>
+          <table class="table" id="tbListUsersVisor"></table>
         </div>
       </div>
     </div>

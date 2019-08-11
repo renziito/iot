@@ -19,7 +19,7 @@ return [
     'setup'     => [
         'defaultController' => "overview"
     ],
-    'project'     => [
+    'list'     => [
         'defaultController' => "overview"
     ]
 ];

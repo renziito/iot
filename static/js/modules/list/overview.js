@@ -1,10 +1,10 @@
 (function ($) {
   'use strict';
 
-  var ProjectList = function () {
+  var ListIndex = function () {
     this.config = $.extend(true, APP, {});
     this.alert = new AlertPlugin();
-    this.table = new TablePlugin("table#tbProjects");
+    this.table = new TablePlugin("table#tbLists");
     this.url = {
       list: this.config.url.controllerFullUrl + '/list',
       delete: this.config.url.moduleFullUrl + '/manage/delete',
@@ -14,7 +14,7 @@
     };
   };
 
-  ProjectList.prototype.delete = function (id) {
+  ListIndex.prototype.delete = function (id) {
     var _class = this;
 
     return new Promise(function (resolve, reject) {
@@ -30,7 +30,7 @@
     });
   };
 
-  ProjectList.prototype._initTable = function () {
+  ListIndex.prototype._initTable = function () {
     var _class = this;
 
     this.table.setOptions({
@@ -47,7 +47,7 @@
 
     this.table.columns([
       {
-        label: 'project',
+        label: 'list',
         width: "100%",
         cellStyle: function (value, row, index) {
           return {
@@ -62,7 +62,7 @@
           var btnUsers = '<a data-toggle="tooltip" title="Usuarios" href="' + _class.url.users + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-users"></i></a>';
           var btnDevices = '<a data-toggle="tooltip" title="Dispositivos" href="' + _class.url.devices + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-cubes"></i></a>';
           var btnLogs = '<a data-toggle="tooltip" title="Log de actividades" href="' + _class.url.devices + '/id/' + row.id + '" class="btn btn-default btn-sm"><i class="fa fa-binoculars"></i></a>';
-          var btnDelete = '<button data-toggle="tooltip" title="Eliminar" class="btn btn-danger btn-sm delete-project"><i class="fa fa-trash"></i></button>';
+          var btnDelete = '<button data-toggle="tooltip" title="Eliminar" class="btn btn-danger btn-sm delete-list"><i class="fa fa-trash"></i></button>';
 
           var view = [
             '<div class="card mb-2">',
@@ -100,7 +100,7 @@
           return view.join("");
         },
         events: {
-          "click .delete-project": function (e, value, row, index) {
+          "click .delete-list": function (e, value, row, index) {
             _class.alert.confirm({
               title: "Advertencia!",
               type: "warning",
@@ -122,10 +122,10 @@
     this.table.init();
   };
 
-  ProjectList.prototype.init = function () {
+  ListIndex.prototype.init = function () {
     this._initTable();
   };
 
-  (new ProjectList()).init();
+  (new ListIndex()).init();
 
 })(window.jQuery);

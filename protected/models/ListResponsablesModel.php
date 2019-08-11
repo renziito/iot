@@ -1,22 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "project_devices".
+ * This is the model class for table "list_responsables".
  *
- * The followings are the available columns in table 'project_devices':
- * @property integer $projectdevice
- * @property integer $project_id
- * @property integer $device_id
+ * The followings are the available columns in table 'list_responsables':
+ * @property integer $listresponsable_id
+ * @property integer $list_id
+ * @property integer $responsable_id
  * @property integer $status
+ *
+ * The followings are the available model relations:
+ * @property Lists $list
+ * @property Responsables $responsable
  */
-class ProjectDevicesModel extends CActiveRecord
+class ListResponsablesModel extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'project_devices';
+		return 'list_responsables';
 	}
 
 	/**
@@ -27,11 +31,11 @@ class ProjectDevicesModel extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('project_id, device_id', 'required'),
-			array('project_id, device_id, status', 'numerical', 'integerOnly'=>true),
+			array('list_id, responsable_id', 'required'),
+			array('list_id, responsable_id, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('projectdevice, project_id, device_id, status', 'safe', 'on'=>'search'),
+			array('listresponsable_id, list_id, responsable_id, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,6 +47,8 @@ class ProjectDevicesModel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'list' => array(self::BELONGS_TO, 'Lists', 'list_id'),
+			'responsable' => array(self::BELONGS_TO, 'Responsables', 'responsable_id'),
 		);
 	}
 
@@ -52,9 +58,9 @@ class ProjectDevicesModel extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'projectdevice' => 'Projectdevice',
-			'project_id' => 'Project',
-			'device_id' => 'Device',
+			'listresponsable_id' => 'Listresponsable',
+			'list_id' => 'List',
+			'responsable_id' => 'Responsable',
 			'status' => 'Status',
 		);
 	}
@@ -77,9 +83,9 @@ class ProjectDevicesModel extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('projectdevice',$this->projectdevice);
-		$criteria->compare('project_id',$this->project_id);
-		$criteria->compare('device_id',$this->device_id);
+		$criteria->compare('listresponsable_id',$this->listresponsable_id);
+		$criteria->compare('list_id',$this->list_id);
+		$criteria->compare('responsable_id',$this->responsable_id);
 		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
@@ -91,7 +97,7 @@ class ProjectDevicesModel extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ProjectDevicesModel the static model class
+	 * @return ListResponsablesModel the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
