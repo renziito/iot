@@ -1,15 +1,15 @@
 -- ESPECIFCO --
 drop table if exists device_responsables;
 drop table if exists device_maintenances;
-drop table if exists project_responsables;
-drop table if exists project_devices;
-drop table if exists project_users;
+drop table if exists list_responsables;
+drop table if exists list_devices;
+drop table if exists list_users;
 drop table if exists devices;
 drop table if exists type_device_variables;
 drop table if exists type_devices;
 drop table if exists type_variables;
 drop table if exists responsables;
-drop table if exists projects;
+drop table if exists lists;
 drop table if exists log_events;
 -- BASE --
 drop procedure if exists sp_navigation_active;
@@ -122,7 +122,7 @@ insert into navigations(navigation_name, navigation_level, navigation_depends, n
 ('Administración de Usuarios',2,1,'/setup/user', null,1),
 ('Administración de Roles',2,1,'/setup/role', null,2),
 ('Administración de Acciones',2,1,'/setup/action', null,3),
-('Proyectos',1,0,'/project','ti-briefcase',1);
+('Listas',1,0,'/list','ti-view-list-alt',1);
 
 CREATE TABLE navigation_paths (
 	navigationpath_id int not null primary key auto_increment,
@@ -138,7 +138,7 @@ insert into navigation_paths(navigation_id,controller_name,action_name,module_na
 (2,'user', null, 'setup'),
 (3,'role', null, 'setup'),
 (4,'action', null, 'setup'),
-(5, null,null,'project');
+(5, null,null,'list');
 
 CREATE TABLE navigation_favorites (
 	navigationfavorite_id int not null primary key auto_increment,
@@ -163,7 +163,7 @@ insert into rbac_group_actions(groupaction_key, groupaction_name) values
 ('ADMIN_USERS','Administrar Usuarios'),
 ('ADMIN_ROLES','Administrar Roles'),
 ('ADMIN_ACTIONS','Administrar Acciones del Sistema'),
-('ADMIN_PROJECTS','Administración de Proyectos');
+('ADMIN_LISTS','Administración de Listas');
 
 CREATE TABLE rbac_actions (
 	action_id int not null primary key auto_increment,
@@ -190,12 +190,12 @@ insert into rbac_actions(groupaction_id, action_key, action_name) values
 (3,'ACTION_UPDATE', 'Actualizar Acciones'),
 (3,'ACTION_DELETE', 'Eliminar Acciones'),
 (3,'ACTION_VIEW', 'Ver Lista de  Acciones'),
-(4,'PROJECT_CREATE', 'Crear Proyectos'),
-(4,'PROJECT_UPDATE', 'Actualizar Proyectos'),
-(4,'PROJECT_DELETE', 'Eliminar Proyectos'),
-(4,'PROJECT_ASSIGN_USERS', 'Asignar Usuarios'),
-(4,'PROJECT_ASSIGN_DEVICES', 'Asignar Dispositivos'),
-(4,'PROJECT_VIEW', 'Ver Proyectos');
+(4,'LIST_CREATE', 'Crear Listas'),
+(4,'LIST_UPDATE', 'Actualizar Listas'),
+(4,'LIST_DELETE', 'Eliminar Listas'),
+(4,'LIST_ASSIGN_USERS', 'Asignar Usuarios'),
+(4,'LIST_ASSIGN_DEVICES', 'Asignar Dispositivos'),
+(4,'LIST_VIEW', 'Ver Listas');
 
 CREATE TABLE rbac_permissions (
 	permission_id int not null primary key auto_increment,
@@ -353,7 +353,7 @@ begin
 END$$
 
 DELIMITER ;
-drop table log_events;
+
 create table log_events(
 	logevent_id int not null primary key auto_increment,
 	action_id int not null,
@@ -376,12 +376,12 @@ create table responsables(
 	status tinyint(1) not null default '1'
 );
 
-create table projects(
-	project_id int not null primary key auto_increment,
-	project_code char(10) not null,
-	project_name varchar(255) not null,
-	project_resumen text null,
-	project_status int not null default '1',
+create table lists(
+	list_id int not null primary key auto_increment,
+	list_code char(10) not null,
+	list_name varchar(255) not null,
+	list_resumen text null,
+	list_status int not null default '1',
 	active tinyint(1) not null default '1',
 	status tinyint(1) not null default '1'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -446,32 +446,32 @@ create table device_responsables(
 	foreign key (responsable_id) references responsables (responsable_id)
 );
 
-create table project_users(
-	projectuser_id int not null primary key auto_increment,
-	project_id int not null,
+create table list_users(
+	listuser_id int not null primary key auto_increment,
+	list_id int not null,
 	role_id int not null,
 	user_id int not null,
 	status tinyint(1) not null default '1',
-	foreign key (project_id) references projects (project_id),
+	foreign key (list_id) references lists (list_id),
 	foreign key (role_id) references rbac_roles (role_id),
 	foreign key (user_id) references users (user_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table project_devices(
-	projectdevice int not null primary key auto_increment,
-	project_id int not null,
+create table list_devices(
+	listdevice int not null primary key auto_increment,
+	list_id int not null,
 	device_id int not null,
 	status tinyint(1) not null default '1',
-	foreign key (project_id) references projects (project_id),
+	foreign key (list_id) references lists (list_id),
 	foreign key (device_id) references devices (device_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table project_responsables(
-	projectresponsable_id int not null primary key auto_increment,
-	project_id int not null,
+create table list_responsables(
+	listresponsable_id int not null primary key auto_increment,
+	list_id int not null,
 	responsable_id int not null,
 	status tinyint(1) not null default '1',
-	foreign key (project_id) references projects (project_id),
+	foreign key (list_id) references lists (list_id),
 	foreign key (responsable_id) references responsables (responsable_id)
 );
 
