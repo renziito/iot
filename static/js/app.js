@@ -42,6 +42,7 @@ const APP = {
     },
     noty: {
       theme: 'relax',
+      timeout: 3000,
       visibilityControl: true,
       killer: true,
       layout: "topRight",

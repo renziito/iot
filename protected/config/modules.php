@@ -19,7 +19,13 @@ return [
     'setup'     => [
         'defaultController' => "overview"
     ],
-    'list'     => [
+    'list'      => [
+        'defaultController' => "overview"
+    ],
+    'device'    => [
+        'defaultController' => "overview"
+    ],
+    'manager'    => [
         'defaultController' => "overview"
     ]
 ];

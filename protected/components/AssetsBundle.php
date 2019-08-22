@@ -6,11 +6,13 @@
  */
 class AssetsBundle {
 
+  public $baseUrl    = "static";
   public $js         = [];
   public $css        = [];
   public $depends    = [];
   public $controller = [];
   public $action     = [];
+  public $min        = false;
   private $class;
 
   public function __construct($controller) {
@@ -39,10 +41,17 @@ class AssetsBundle {
   private function normalizeFile(&$files_arr, $dir) {
     if (isset($this->class->module))
       foreach ($files_arr as $key => &$val)
-        $val = $dir . '/modules/' . $this->class->module->id . '/' . $val;
+        $val = $dir . '/modules/' . $this->belongsAnotherModule($val).".".$dir;
     else
       foreach ($files_arr as $key => &$val)
         $val = $dir . '/' . $val;
+  }
+
+  private function belongsAnotherModule($file) {
+    if (!strpos($file, "/")) {
+      return $this->class->module->id . '/' . $file;
+    }
+    return $file;
   }
 
   private function registerJS() {
@@ -78,7 +87,7 @@ class AssetsBundle {
 
   public function register() {
     return [
-        "baseUrl" => "static",
+        "baseUrl" => $this->baseUrl,
         "js"      => $this->js,
         "css"     => $this->css,
         "depends" => $this->depends

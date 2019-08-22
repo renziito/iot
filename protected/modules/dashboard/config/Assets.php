@@ -12,7 +12,7 @@ class Assets extends AssetsBundle
      */
     public $controller = [
         "overview" => [
-            "js"      => ["overview.js"],
+            "js"      => ["overview"],
             "css"     => [],
             "depends" => ["alertPlugin"],
         ]

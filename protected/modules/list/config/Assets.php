@@ -12,19 +12,19 @@ class Assets extends AssetsBundle
      */
     public $controller = [
         "overview" => [
-            "js"      => ["overview.js"],
+            "js"      => ["overview"],
             "css"     => [],
             "depends" => ["tablePlugin", "alertPlugin"],
         ],
         "manage" => [
-            "js"      => ["manage.js"],
+            "js"      => ["manage"],
             "css"     => [],
             "depends" => ["jquery-validation", "alertPlugin"],
         ]
     ];
     public $action     = [
         "manage.users"  => [
-            "js"      => ["users.js"],
+            "js"      => ["users"],
             "css"     => [],
             "depends" => ["tablePlugin"],
         ],
