@@ -27,5 +27,8 @@ return [
     ],
     'manager'    => [
         'defaultController' => "overview"
+    ],
+    'setting'    => [
+        'defaultController' => "overview"
     ]
 ];

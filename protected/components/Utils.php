@@ -216,4 +216,14 @@ class Utils {
     return $url;
   }
 
+  public static function randomNumber($length) {
+    $str = "";
+    $chars = "0123456789011121314151617181920";
+    $size  = strlen($chars);
+    for ($i = 0; $i < $length; $i++) {
+      $str .= $chars[rand(0, $size - 1)];
+    }
+    return $str;
+  }
+
 }
