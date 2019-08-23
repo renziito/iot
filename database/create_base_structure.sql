@@ -475,4 +475,33 @@ create table list_responsables(
 	foreign key (responsable_id) references responsables (responsable_id)
 );
 
+create table images(
+	image_id int not null primary key auto_increment,
+	image_name varchar(255) not null,
+	image_mimetype varchar(255) not null,
+	image_extension varchar(10) not null,
+	image_size decimal(15,2) not null,
+	date_create timestamp null default current_timestamp,
+	status tinyint(1) NOT NULL DEFAULT '1'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists banners;
+create table banners(
+	banner_id int not null primary key auto_increment,
+	image_id int not null,
+	banner_title varchar(255)null,
+	banner_description text null,
+	banner_order int not null default '1',
+	active tinyint(1) NOT NULL DEFAULT '1',
+	status tinyint(1) NOT NULL DEFAULT '1',
+	foreign key (image_id) references images (image_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table cards(
+	card_id int not null primary key auto_increment,
+	card_title varchar(255) not null,
+	card_description text not null,
+	banner_order int not null,
+	status tinyint(1) NOT NULL DEFAULT '1'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

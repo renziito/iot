@@ -30,5 +30,8 @@ return [
     ],
     'setting'    => [
         'defaultController' => "overview"
+    ],
+    'api'    => [
+        'defaultController' => "overview"
     ]
 ];

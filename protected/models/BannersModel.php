@@ -33,9 +33,10 @@ class BannersModel extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('image_id, banner_title, banner_description, banner_order', 'required'),
+			array('image_id', 'required'),
 			array('image_id, banner_order, active, status', 'numerical', 'integerOnly'=>true),
 			array('banner_title', 'length', 'max'=>255),
+			array('banner_description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('banner_id, image_id, banner_title, banner_description, banner_order, active, status', 'safe', 'on'=>'search'),

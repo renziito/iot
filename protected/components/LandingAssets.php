@@ -6,9 +6,9 @@
  */
 class LandingAssets {
 
-  public static $js      = [];
+  public static $js      = ["js/app.js","js/landing.js"];
   public static $css     = [];
-  public static $depends = ["bootstrap"];
+  public static $depends = ["bootstrap", "glide"];
 
   public static function registerScript() {
     Yii::app()->clientScript->addPackage("landing", [

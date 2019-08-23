@@ -118,6 +118,22 @@ class PackagesAssets {
           ],
           'css'     => ['css/bootstrap-datepicker3.min.css'],
           'depends' => ["bootstrap"],
+      ],
+      'sortable'          => [
+          'baseUrl' => 'static/third_party/sortablejs',
+          'js'      => [
+              'Sortable.min.js'
+          ],
+          'css'     => [],
+          'depends' => ["jquery"],
+      ],
+      'glide'             => [
+          'baseUrl' => 'static/third_party/glidejs--glide/dist',
+          'js'      => [
+              'glide.min.js'
+          ],
+          'css'     => ["css/glide.core.min.css", "css/glide.theme.min.css"],
+          'depends' => ["jquery"],
       ]
   ];
 

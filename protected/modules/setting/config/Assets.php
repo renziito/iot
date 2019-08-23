@@ -11,12 +11,23 @@ class Assets extends AssetsBundle {
    * @var type
    */
   public $controller = [
-      "overview" => [
+      "banner" => [
           "js"      => [],
           "css"     => [],
           "depends" => [],
       ]
   ];
-  public $action     = [];
+  public $action     = [
+      "banner.index" => [
+          "js"      => ["banner.list"],
+          "css"     => [],
+          "depends" => ["sortable"],
+      ],
+      "banner.create" => [
+          "js"      => ["banner.create"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "jquery-validation"],
+      ]
+  ];
 
 }

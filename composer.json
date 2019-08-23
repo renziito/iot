@@ -20,7 +20,9 @@
     "dompdf/dompdf": "^0.8.3",
     "bower-asset/bootstrap-datepicker": "^1.8",
     "bower-asset/bootstrap-table": "1.12.1",
-    "phpoffice/phpspreadsheet": "^1.6"
+    "phpoffice/phpspreadsheet": "^1.6",
+    "npm-asset/sortablejs": "^1.9",
+    "npm-asset/glidejs--glide": "^3.3"
   },
   "authors": [
     {
@@ -34,7 +36,8 @@
     "vendor-dir": "protected/vendor",
     "fxp-asset": {
       "installer-paths": {
-        "bower-asset-library": "static/third_party"
+        "bower-asset-library": "static/third_party",
+        "npm-asset-library": "static/third_party"
       }
     }
   }

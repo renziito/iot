@@ -11,9 +11,7 @@
   </div>
 </nav>
 <section id="banner">
-  <div class="jumbotron">
-    <div class="w-100" style="height: 250px">&nbsp;</div>
-  </div>
+  
 </section>
 <section id="about" class="py-5">
   <div class="container">
