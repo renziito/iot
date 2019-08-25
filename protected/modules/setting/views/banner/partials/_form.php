@@ -37,7 +37,7 @@
   <div class="col-md-9">
 
     <div class="mb-2">
-      <img id="bannePreview" class="img-thumbnail" src="https://via.placeholder.com/800x300" width="50%">
+      <img id="bannePreview" class="img-thumbnail" src="https://via.placeholder.com/800x500" width="50%">
     </div>
     <div>
       <?=

@@ -18,16 +18,36 @@ class Assets extends AssetsBundle {
       ]
   ];
   public $action     = [
-      "banner.index" => [
+      "banner.index"   => [
           "js"      => ["banner.list"],
           "css"     => [],
           "depends" => ["sortable"],
       ],
-      "banner.create" => [
+      "banner.create"  => [
           "js"      => ["banner.create"],
           "css"     => [],
           "depends" => ["alertPlugin", "jquery-validation"],
-      ]
+      ],
+      "card.index"     => [
+          "js"      => ["card.list"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "tablePlugin"],
+      ],
+      "partner.index"  => [
+          "js"      => ["partner.list"],
+          "css"     => [],
+          "depends" => ["tablePlugin", "alertPlugin"],
+      ],
+      "partner.create" => [
+          "js"      => ["partner.create"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "jquery-validation"],
+      ],
+      "partner.update" => [
+          "js"      => ["partner.create"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "jquery-validation"],
+      ],
   ];
 
 }

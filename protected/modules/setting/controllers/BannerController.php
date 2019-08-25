@@ -35,7 +35,7 @@ class BannerController extends Auth {
           throw new Exception("No se pudo completar la operación" . json_encode($model->getErrors()), 500);
         }
 
-        Yii::app()->user->setFlash("success", "Banner guarado correctamente.");
+        Yii::app()->user->setFlash("success", "La operación se completó exitosamente.");
         $this->redirect(Yii::app()->createUrl("setting/banner"));
       } catch (Exception $ex) {
         Yii::app()->user->setFlash("danger", $ex->getMessage());

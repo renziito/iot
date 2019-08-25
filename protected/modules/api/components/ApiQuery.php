@@ -21,4 +21,12 @@ class ApiQuery {
         ->queryAll();
   }
 
+  public static function getAllContents() {
+    return CardsQuery::getAll();
+  }
+
+  public static function getAllPartnes() {
+    return PartnersQuery::getAll();
+  }
+
 }

@@ -9,13 +9,14 @@
   LandingBanner.prototype._templateHTMLItem = function (item) {
     var html = [
       '<li class="glide__slide m-0">',
-      '<div style="background-image:url(' + item.iurl + ');background-position: center center;background-repeat: no-repeat;background-size: cover;width: 100%; min-height: 500px; max-height: 500px;">',
+      '<div style="background-image:url(' + item.iurl + ');background-position: top center;background-repeat: no-repeat;background-size: cover;width: 100%; min-height: 500px; max-height: 500px;">',
       '</div>',
       '</li>'
     ];
 
     return html.join("")
   };
+
   LandingBanner.prototype._templateHTML = function (items) {
     var html = [
       '<div class="glide">',
@@ -51,8 +52,10 @@
 
     this._loadData()
       .then(function (data) {
-        _class.$banner.html(_class._templateHTML(data));
-        _class._initCarousel();
+        if (data.length > 0) {
+          _class.$banner.html(_class._templateHTML(data));
+          _class._initCarousel();
+        }
       });
   };
 
@@ -62,7 +65,7 @@
       startAt: 0,
       perView: 1,
       gap: 0,
-      autoplay: 3000,
+      autoplay: 5000,
       rewind: true,
       rewindDuration: 0
 //      animationDuration:6000,
@@ -75,6 +78,144 @@
   };
 
   (new LandingBanner()).init();
+
+
+})(window.jQuery);
+
+(function ($) {
+  'use strict';
+
+  var LandingContent = function () {
+    this.config = $.extend(true, APP, {});
+    this.$content = $("#content");
+  }
+
+  LandingContent.prototype._templateHTMLItem = function (item) {
+    var html = [
+      '<div class="col-12 col-md-4">',
+      '<h2 class="mb-3">' + item.ctitle + '</h2>',
+      '<p class="mb-5">' + item.cdescription + '</p>',
+      '</div>'
+    ];
+
+    return html.join("")
+  };
+
+  LandingContent.prototype._templateHTML = function (items) {
+    var html = [];
+
+    for (var item in items) {
+      html.push(this._templateHTMLItem(items[item]));
+    }
+
+    return html.join("");
+  };
+
+  LandingContent.prototype._loadData = function () {
+    var _class = this;
+
+    return new Promise(function (resolve, reject) {
+      $.get(_class.config.url.baseFullUrl + "/api/page/contents", function (response) {
+        resolve(response.data);
+      });
+    });
+  };
+
+  LandingContent.prototype._buildHTML = function () {
+    var _class = this;
+
+    this._loadData()
+      .then(function (data) {
+        if (data.length > 0) {
+          _class.$content.html(_class._templateHTML(data));
+        }
+      });
+  };
+
+  LandingContent.prototype.init = function () {
+    this._buildHTML();
+  };
+
+  (new LandingContent()).init();
+
+
+})(window.jQuery);
+
+(function ($) {
+  'use strict';
+
+  var LandingPartners = function () {
+    this.config = $.extend(true, APP, {});
+    this.$partner = $("#partners");
+  }
+
+  LandingPartners.prototype._templateHTMLItem = function (item) {
+    var html = [
+      '<li class="glide__slide">',
+      '<a target="_blank" href="' + item.purl + '">',
+      '<img class="img-thumbnail" alt="' + item.pname + '" src="' + item.iurl + '" style="min-height: 150px; max-height: 150px;">',
+      '</a>',
+      '</li>'
+    ];
+
+    return html.join("")
+  };
+
+  LandingPartners.prototype._templateHTML = function (items) {
+    var html = [];
+
+    for (var item in items) {
+      html.push(this._templateHTMLItem(items[item]));
+    }
+
+    return html.join("");
+  };
+
+  LandingPartners.prototype._loadData = function () {
+    var _class = this;
+
+    return new Promise(function (resolve, reject) {
+      $.get(_class.config.url.baseFullUrl + "/api/page/partners", function (response) {
+        resolve(response.data);
+      });
+    });
+  };
+
+  LandingPartners.prototype._buildHTML = function () {
+    var _class = this;
+
+    this._loadData()
+      .then(function (data) {
+        if (data.length > 0) {
+          _class.$partner.html(_class._templateHTML(data));
+          _class._initCarousel();
+        }
+      });
+
+  };
+
+  LandingPartners.prototype._initCarousel = function () {
+    new Glide('.partners', {
+      type: 'carousel',
+      startAt: 0,
+      perView: 3,
+      autoplay: 3000,
+      breakpoints: {
+        800: {
+          perView: 2
+        },
+        500: {
+          perView: 1
+        }
+      }
+    }).mount();
+  };
+
+  LandingPartners.prototype.init = function () {
+    this._buildHTML();
+  };
+
+  (new LandingPartners()).init();
 
 
 })(window.jQuery);

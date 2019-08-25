@@ -1,13 +1,13 @@
 <?php
 $this->breadcrumbs = [
-    "Configuración del Sitio"=> "#",
-    "Banners" => Yii::app()->createUrl("setting/banner"),
-    "Nuevo"
+    "Configuración del Sitio" => "#",
+    "Contenido"               => Yii::app()->createUrl("setting/card"),
+    "Actualizar"
 ];
 ?>
 <?php
-$form = $this->beginWidget('CActiveForm', [
-    'id'          => 'form-banner',
+$form              = $this->beginWidget('CActiveForm', [
+    'id'          => 'form-card',
     'htmlOptions' => [
         'role'    => 'form',
         'enctype' => 'multipart/form-data',
@@ -28,12 +28,12 @@ $form = $this->beginWidget('CActiveForm', [
   </div>
   <div class="col-12">
     <div class="text-right">
-      <a href="<?= Yii::app()->createUrl("setting/banner") ?>" class="btn">
+      <a href="<?= Yii::app()->createUrl("setting/card") ?>" class="btn">
         <strong><u>Cancelar</u></strong>
       </a>
       <button type="submit" class="btn btn-sm btn-success btn-submit">
         <i class="fa fa-save"></i>&nbsp;
-        Guardar
+        Actualizar
       </button>
     </div>
   </div>

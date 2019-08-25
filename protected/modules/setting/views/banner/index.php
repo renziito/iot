@@ -1,5 +1,6 @@
 <?php
 $this->breadcrumbs = [
+    "Configuración del Sitio"=> "#",
     "Banners"
 ];
 ?>

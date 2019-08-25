@@ -17,7 +17,7 @@ class Images {
     $thumbnail->save("{$urlImage}/thumb/" . Files::getName($nameImage) . "_{$resize}." . Files::getExtension($nameImage));
   }
 
-  public static function create(CUploadedFile $file, $thumbnail = true) {
+  public static function create(CUploadedFile $file, $thumbnail = ["XS" => 150, "SM" => 300, "MD" => 500]) {
     $path   = Yii::getPathOfAlias("webroot") . "/storage/images";
     $status = new stdClass();
 
@@ -47,10 +47,10 @@ class Images {
 
       $status->data = $model;
 
-      if ($thumbnail) {
-        self::thumbnail($path, "{$nameImage}", 150);
-        self::thumbnail($path, "{$nameImage}", 300, "SM");
-        self::thumbnail($path, "{$nameImage}", 500, "MD");
+      if ($thumbnail && is_array($thumbnail)) {
+        foreach ($thumbnail as $name => $size) {
+          self::thumbnail($path, "{$nameImage}", (int) $size, $name);
+        }
       }
     } catch (Exception $ex) {
       $status->error = new stdClass();

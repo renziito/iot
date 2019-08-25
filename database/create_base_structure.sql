@@ -497,11 +497,25 @@ create table banners(
 	foreign key (image_id) references images (image_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists cards;
 create table cards(
 	card_id int not null primary key auto_increment,
 	card_title varchar(255) not null,
 	card_description text not null,
-	banner_order int not null,
+	card_order int not null DEFAULT '1',
+	status tinyint(1) NOT NULL DEFAULT '1'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+select * from partners;
+
+drop table if exists partners;
+create table partners(
+	partner_id int not null primary key auto_increment,
+	image_id varchar(255) not null,
+	partner_name varchar(255) not null,
+	partner_url text not null,
+	partner_description text null,
+	partner_order int not null DEFAULT '1',
 	status tinyint(1) NOT NULL DEFAULT '1'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

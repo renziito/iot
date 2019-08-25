@@ -127,6 +127,12 @@ class PackagesAssets {
           'css'     => [],
           'depends' => ["jquery"],
       ],
+      'placeholder'          => [
+          'baseUrl' => 'static/third_party/placeholder-loading/dist',
+          'js'      => [],
+          'css'     => ["css/placeholder-loading.min.css"],
+          'depends' => ["jquery"],
+      ],
       'glide'             => [
           'baseUrl' => 'static/third_party/glidejs--glide/dist',
           'js'      => [

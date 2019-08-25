@@ -22,7 +22,8 @@
     "bower-asset/bootstrap-table": "1.12.1",
     "phpoffice/phpspreadsheet": "^1.6",
     "npm-asset/sortablejs": "^1.9",
-    "npm-asset/glidejs--glide": "^3.3"
+    "npm-asset/glidejs--glide": "^3.3",
+    "bower-asset/placeholder-loading": "^0.2.2"
   },
   "authors": [
     {
