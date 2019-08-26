@@ -25,4 +25,23 @@ class DevicesQuery {
         ->queryAll();
   }
 
+  public static function getAllResponsables($device_id) {
+    return Yii::app()->db->createCommand()
+        ->select("
+          dr.deviceresponsable_id as drid
+          ,dr.device_id as did
+          ,r.responsable_id as rid
+          ,r.responsable_name rname
+          ,r.responsable_phone rphone
+          ,r.responsable_position rposition
+        ")
+        ->from("device_responsables dr")
+        ->join("responsables r", "r.responsable_id = dr.responsable_id")
+        ->where("dr.status = :status and dr.device_id = :id", [
+            ":status" => Globals::STATUS_ACTIVE,
+            ":id"     => $device_id
+        ])
+        ->queryAll();
+  }
+
 }
