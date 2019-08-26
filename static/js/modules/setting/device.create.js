@@ -26,10 +26,20 @@
         "TypeDevicesModel[typedevice_origin]": {
           required: true
         },
+        "TypeDevicesModel[typedevice_maintenance_frequency]": {
+          required: true,
+          number: true,
+          min: 0.1
+        },
       },
       messages: {
         "TypeDevicesModel[typedevice_denomination]": "Debes ingresar la denominación del tipo de dispositivo",
-        "TypeDevicesModel[typedevice_origin]": "Debes ingresar el origen del tipo de dispositivo"
+        "TypeDevicesModel[typedevice_origin]": "Debes ingresar el origen del tipo de dispositivo",
+        "TypeDevicesModel[typedevice_maintenance_frequency]": {
+          required: "Debes ingresar la frecuencia del mantenimiento.",
+          number: "La frecuencia de mantenimiento debe ser expresa en números.",
+          min: "No puede declarar la frecuencia de mantenimiento como cero."
+        }
       }
     });
   };

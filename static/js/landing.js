@@ -244,29 +244,47 @@
     this.$lists = $("#lists");
   }
 
-  LandingLists.prototype._templateHTMLItem = function (item) {
+  LandingLists.prototype._templateHTMLItem = function (position, item) {
+    var active = (position == 0) ? "active" : "";
     var html = [
-      '<div class="col-12 col-md-4">',
-      '<div class="card">',
-      '<img src="https://via.placeholder.com/300x150" class="card-img-top" alt="...">',
-      '<div class="card-body">',
-      '<h5 class="card-title">'+item.lname+'</h5>',
-      '<p class="card-text">'+item.ldescription+'</p>',
-      '<a href="#" class="card-link"><strong>Ver reporte</strong></a>',
-      '</div>',
-      '</div>',
-      '</div>'
+      '<a class="nav-item nav-link ' + active + '" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">',
+      item.lname,
+      '</a>'
     ];
 
     return html.join("")
   };
 
   LandingLists.prototype._templateHTML = function (items) {
-    var html = [];
-
+    var html = [
+      '<nav>',
+      '<div class="nav nav-tabs" id="nav-tab" role="tablist">'
+    ];
+    var i = 0;
     for (var item in items) {
-      html.push(this._templateHTMLItem(items[item]));
+      html.push(this._templateHTMLItem(i, items[item]));
+      i++;
     }
+
+    html.push("</div>", "</nav>");
+    html.push('<div class="tab-content" id="nav-tabContent">');
+    html.push('<div class=" border tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">');
+    html.push('<div class="row">');
+    html.push('<div class="col-12 col-md-10 pr-0">');
+    html.push('<img class="border-right img-fluid" src="' + this.config.url.baseFullUrl + '/static/img/default/maps.png">');
+    html.push('</div>');
+    html.push('<div class="col-12 col-md-2 py-2">');
+    html.push('<h5 class="mb-3">Variables</h5>');
+    html.push('<div class="text-muted"><strong>Temperatura Max.</strong></div>');
+    html.push('<div class="mb-2">17°</div>');
+    html.push('<div class="text-muted"><strong>Temperatura Med.</strong></div>');
+    html.push('<div class="mb-2">13.5°</div>');
+    html.push('<div class="text-muted"><strong>Temperatura Min.</strong></div>');
+    html.push('<div class="mb-2">10°</div>');
+    html.push('</div>');
+    html.push('</div>');
+    html.push('</div>');
+    html.push('</div>');
 
     return html.join("");
   };

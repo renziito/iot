@@ -18,6 +18,11 @@ class Assets extends AssetsBundle {
       ]
   ];
   public $action     = [
+      "overview.index" => [
+          "js"      => ["device.list"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "tablePlugin"],
+      ],
       "manage.create" => [
           "js"      => ["device.create"],
           "css"     => [],

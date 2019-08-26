@@ -59,7 +59,16 @@
     ?>
   </div>
 </div>
-<div class="form-group row modem-required d-none">
+<?php
+$modem = false;
+if(isset($model->typedevice_id)){
+  $type = TypeDevicesModel::model()->findByPk($model->typedevice_id);
+  if($type){
+    $modem = ($type->typedevice_modem == 1) ? true : false;
+  }
+}
+?>
+<div class="form-group row modem-required <?=($modem)?"":"d-none"?>">
   <label for="DevicesModel_device_number_modem" class="col-md-3 control-label">Número Modem</label>
   <div class="col-md-9">
     <?=
@@ -69,7 +78,7 @@
     ?>
   </div>
 </div>
-<div class="form-group row modem-required d-none">
+<div class="form-group row modem-required <?=($modem)?"":"d-none"?>">
   <label for="DevicesModel_device_provider_modem" class="col-md-3 control-label">Proveedor Modem</label>
   <div class="col-md-9">
     <?=

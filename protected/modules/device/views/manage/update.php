@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs = [
     "Dispositivos" => Yii::app()->createUrl("device"),
-    "Nuevo"
+    "Actualizar"
 ];
 
 $form = $this->beginWidget('CActiveForm', [
@@ -30,7 +30,7 @@ $form = $this->beginWidget('CActiveForm', [
       </a>
       <button type="submit" class="btn btn-sm btn-success btn-submit">
         <i class="fa fa-save"></i>&nbsp;
-        Guardar y continuar
+        Actualizar
       </button>
     </div>
   </div>

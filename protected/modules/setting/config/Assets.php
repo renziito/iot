@@ -73,6 +73,11 @@ class Assets extends AssetsBundle {
           "css"     => [],
           "depends" => ["alertPlugin", "jquery-validation"],
       ],
+      "device.update"    => [
+          "js"      => ["device.create"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "jquery-validation"],
+      ],
       "device.variables" => [
           "js"      => ["device.variable"],
           "css"     => [],

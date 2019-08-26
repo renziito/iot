@@ -29,10 +29,10 @@
   </div>
 </div>
 <div class="form-group row">
-  <label for="TypeDevicesModel_typedevice_maintenance_frequency" class="col-md-3 control-label">Frecuencia de Mantenimiento</label>
+  <label for="TypeDevicesModel_typedevice_maintenance_frequency" class="col-md-3 control-label">Frecuencia de Mantenimiento (Meses)</label>
   <div class="col-md-9">
     <?=
-    $form->dropDownList($model, "typedevice_maintenance_frequency",Date::getMonthAll(), [
+     $form->textField($model, 'typedevice_maintenance_frequency', [
         "class" => "form-control",
     ]);
     ?>

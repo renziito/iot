@@ -3,10 +3,10 @@
 return [
   'components' => [
     'db' => [
-      'connectionString' => 'mysql:host=127.0.0.1;dbname=iot',
+      'connectionString' => 'mysql:host=63.142.254.224;dbname=iot',
       'emulatePrepare'   => true,
       'username'         => 'root',
-      'password'         => '123456',
+      'password'         => 're@-1sAg=WdP',
       'charset'          => 'utf8',
     ]
   ]
