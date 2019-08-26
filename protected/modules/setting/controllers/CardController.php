@@ -57,12 +57,12 @@ class CardController extends Auth {
         $this->redirect(Yii::app()->createUrl("setting/card"));
       } catch (Exception $ex) {
         Yii::app()->user->setFlash("danger", $ex->getMessage());
-        $this->redirect(Yii::app()->createUrl("setting/card/create"));
+        $this->redirect(Yii::app()->createUrl("setting/card/update/{$id}"));
       }
     }
 
     $this->current_title = $model->card_title;
-    $this->render("create", compact("model"));
+    $this->render("update", compact("model"));
   }
 
   public function actionDelete($id) {

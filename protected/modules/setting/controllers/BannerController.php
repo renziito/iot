@@ -22,7 +22,7 @@ class BannerController extends Auth {
           throw new Exception("No hemos podido encontrar el archivo seleccionado.", 500);
         }
 
-        $image = Images::create($file, true);
+        $image = Images::create($file);
 
         if ($image->error) {
           throw new Exception("No hemos podido guardar la imagen.", 500);

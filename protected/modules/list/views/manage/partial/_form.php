@@ -31,6 +31,19 @@ $form  = $this->beginWidget('CActiveForm', [
   </div>
 </div>
 <div class="form-group row">
+  <label for="ListsModel_active" class="col-md-2 control-label">¿Mostrar en web?</label>
+  <div class="col-md-10">
+    <div class="toggle-checkbox toggle-success checkbox-inline">
+      <?=
+      $form->checkBox($model, 'active', [
+          "class" => "",
+      ]);
+      ?>
+      <label for="ListsModel_active"></label>
+    </div>
+  </div>
+</div>
+<div class="form-group row">
   <label for="ListsModel_list_resumen" class="col-md-2 control-label">Descripción</label>
   <div class="col-md-10">
     <?= $form->textArea($model, "list_resumen", ["class" => "form-control", "rows" => 3]) ?>

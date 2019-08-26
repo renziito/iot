@@ -18,35 +18,65 @@ class Assets extends AssetsBundle {
       ]
   ];
   public $action     = [
-      "banner.index"   => [
+      "banner.index"     => [
           "js"      => ["banner.list"],
           "css"     => [],
           "depends" => ["sortable"],
       ],
-      "banner.create"  => [
+      "banner.create"    => [
           "js"      => ["banner.create"],
           "css"     => [],
           "depends" => ["alertPlugin", "jquery-validation"],
       ],
-      "card.index"     => [
+      "card.index"       => [
           "js"      => ["card.list"],
           "css"     => [],
           "depends" => ["alertPlugin", "tablePlugin"],
       ],
-      "partner.index"  => [
+      "partner.index"    => [
           "js"      => ["partner.list"],
           "css"     => [],
           "depends" => ["tablePlugin", "alertPlugin"],
       ],
-      "partner.create" => [
+      "partner.create"   => [
           "js"      => ["partner.create"],
           "css"     => [],
           "depends" => ["alertPlugin", "jquery-validation"],
       ],
-      "partner.update" => [
+      "partner.update"   => [
           "js"      => ["partner.create"],
           "css"     => [],
           "depends" => ["alertPlugin", "jquery-validation"],
+      ],
+      "variable.index"   => [
+          "js"      => ["variable.list"],
+          "css"     => [],
+          "depends" => ["tablePlugin", "alertPlugin"],
+      ],
+      "variable.create"  => [
+          "js"      => ["variable.create"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "jquery-validation"],
+      ],
+      "variable.update"  => [
+          "js"      => ["variable.create"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "jquery-validation"],
+      ],
+      "device.index"     => [
+          "js"      => ["device.list"],
+          "css"     => [],
+          "depends" => ["tablePlugin", "alertPlugin"],
+      ],
+      "device.create"    => [
+          "js"      => ["device.create"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "jquery-validation"],
+      ],
+      "device.variables" => [
+          "js"      => ["device.variable"],
+          "css"     => [],
+          "depends" => ["tablePlugin", "alertPlugin", "select2", "jquery-validation"],
       ],
   ];
 

@@ -1,12 +1,12 @@
 <?php
 $this->breadcrumbs = [
-    "Configuración del Sitio"=> "#",
-    "Banners" => Yii::app()->createUrl("setting/banner"),
+    "Configuración del Sitio" => Yii::app()->createUrl("setting"),
+    "Banners"                 => Yii::app()->createUrl("setting/banner"),
     "Nuevo"
 ];
 ?>
 <?php
-$form = $this->beginWidget('CActiveForm', [
+$form              = $this->beginWidget('CActiveForm', [
     'id'          => 'form-banner',
     'htmlOptions' => [
         'role'    => 'form',

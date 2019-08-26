@@ -17,6 +17,12 @@ class Assets extends AssetsBundle {
           "depends" => [],
       ]
   ];
-  public $action     = [];
+  public $action     = [
+      "manage.create" => [
+          "js"      => ["device.create"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "jquery-validation"],
+      ]
+  ];
 
 }

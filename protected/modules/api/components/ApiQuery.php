@@ -29,4 +29,19 @@ class ApiQuery {
     return PartnersQuery::getAll();
   }
 
+  public static function getAllLists() {
+    return Yii::app()->db->createCommand()
+        ->select("
+          l.list_name as lname
+          ,l.list_resumen as ldescription
+          ,l.list_id as lid
+          ")
+        ->from("lists l")
+        ->where("l.status = :status and l.active = :active", [
+            ":status" => Globals::STATUS_ACTIVE,
+            ":active" => Globals::STATUS_ACTIVE
+        ])
+        ->queryAll();
+  }
+
 }

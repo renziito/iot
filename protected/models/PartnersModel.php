@@ -5,12 +5,15 @@
  *
  * The followings are the available columns in table 'partners':
  * @property integer $partner_id
- * @property string $image_id
+ * @property integer $image_id
  * @property string $partner_name
  * @property string $partner_url
  * @property string $partner_description
  * @property integer $partner_order
  * @property integer $status
+ *
+ * The followings are the available model relations:
+ * @property Images $image
  */
 class PartnersModel extends CActiveRecord
 {
@@ -31,8 +34,8 @@ class PartnersModel extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('image_id, partner_name, partner_url', 'required'),
-			array('partner_order, status', 'numerical', 'integerOnly'=>true),
-			array('image_id, partner_name', 'length', 'max'=>255),
+			array('image_id, partner_order, status', 'numerical', 'integerOnly'=>true),
+			array('partner_name', 'length', 'max'=>255),
 			array('partner_description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -48,6 +51,7 @@ class PartnersModel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'image' => array(self::BELONGS_TO, 'Images', 'image_id'),
 		);
 	}
 
@@ -86,7 +90,7 @@ class PartnersModel extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('partner_id',$this->partner_id);
-		$criteria->compare('image_id',$this->image_id,true);
+		$criteria->compare('image_id',$this->image_id);
 		$criteria->compare('partner_name',$this->partner_name,true);
 		$criteria->compare('partner_url',$this->partner_url,true);
 		$criteria->compare('partner_description',$this->partner_description,true);

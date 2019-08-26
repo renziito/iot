@@ -1,3 +1,7 @@
+/* ============================================================
+ * Banner
+ * ============================================================ */
+
 (function ($) {
   'use strict';
 
@@ -9,7 +13,7 @@
   LandingBanner.prototype._templateHTMLItem = function (item) {
     var html = [
       '<li class="glide__slide m-0">',
-      '<div style="background-image:url(' + item.iurl + ');background-position: top center;background-repeat: no-repeat;background-size: cover;width: 100%; min-height: 500px; max-height: 500px;">',
+      '<div style="background-image:url(' + item.iurl + ');background-position: center center;background-repeat: no-repeat;background-size: cover;width: 100%; min-height: 500px; max-height: 500px;">',
       '</div>',
       '</li>'
     ];
@@ -82,6 +86,10 @@
 
 })(window.jQuery);
 
+/* ============================================================
+ * Cards
+ * ============================================================ */
+
 (function ($) {
   'use strict';
 
@@ -141,6 +149,10 @@
 
 })(window.jQuery);
 
+/* ============================================================
+ * Pages Partners
+ * ============================================================ */
+
 (function ($) {
   'use strict';
 
@@ -151,7 +163,7 @@
 
   LandingPartners.prototype._templateHTMLItem = function (item) {
     var html = [
-      '<li class="glide__slide">',
+      '<li class="glide__slide text-center">',
       '<a target="_blank" href="' + item.purl + '">',
       '<img class="img-thumbnail" alt="' + item.pname + '" src="' + item.iurl + '" style="min-height: 150px; max-height: 150px;">',
       '</a>',
@@ -216,6 +228,76 @@
   };
 
   (new LandingPartners()).init();
+
+
+})(window.jQuery);
+
+/* ============================================================
+ * Lists
+ * ============================================================ */
+
+(function ($) {
+  'use strict';
+
+  var LandingLists = function () {
+    this.config = $.extend(true, APP, {});
+    this.$lists = $("#lists");
+  }
+
+  LandingLists.prototype._templateHTMLItem = function (item) {
+    var html = [
+      '<div class="col-12 col-md-4">',
+      '<div class="card">',
+      '<img src="https://via.placeholder.com/300x150" class="card-img-top" alt="...">',
+      '<div class="card-body">',
+      '<h5 class="card-title">'+item.lname+'</h5>',
+      '<p class="card-text">'+item.ldescription+'</p>',
+      '<a href="#" class="card-link"><strong>Ver reporte</strong></a>',
+      '</div>',
+      '</div>',
+      '</div>'
+    ];
+
+    return html.join("")
+  };
+
+  LandingLists.prototype._templateHTML = function (items) {
+    var html = [];
+
+    for (var item in items) {
+      html.push(this._templateHTMLItem(items[item]));
+    }
+
+    return html.join("");
+  };
+
+  LandingLists.prototype._loadData = function () {
+    var _class = this;
+
+    return new Promise(function (resolve, reject) {
+      $.get(_class.config.url.baseFullUrl + "/api/page/lists", function (response) {
+        resolve(response.data);
+      });
+    });
+  };
+
+  LandingLists.prototype._buildHTML = function () {
+    var _class = this;
+
+    this._loadData()
+      .then(function (data) {
+        if (data.length > 0) {
+          _class.$lists.html(_class._templateHTML(data));
+        }
+      });
+
+  };
+
+  LandingLists.prototype.init = function () {
+    this._buildHTML();
+  };
+
+  (new LandingLists()).init();
 
 
 })(window.jQuery);

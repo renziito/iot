@@ -70,6 +70,7 @@ class ManageController extends Auth {
       }
     }
 
+    $this->layout          = "/layouts/update";
     $this->container_fluid = false;
     $this->current_title   = $model->list_name;
 
@@ -112,7 +113,8 @@ class ManageController extends Auth {
     if (!$model || !ListsQuery::isAdmin($model->list_id)) {
       throw new CHttpException(404, "Página no encontrada");
     }
-
+    
+    $this->layout          = "/layouts/update";
     $this->container_fluid = false;
     $this->current_title   = "Asignar Usuarios";
 
@@ -125,7 +127,8 @@ class ManageController extends Auth {
     if (!$model || !ListsQuery::isAdmin($model->list_id)) {
       throw new CHttpException(404, "Página no encontrada");
     }
-
+    
+    $this->layout          = "/layouts/update";
     $this->container_fluid = false;
     $this->current_title   = "Asignar Dispositivos";
 

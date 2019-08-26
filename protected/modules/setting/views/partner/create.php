@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = [
-    "Configuración del Sitio" => "#",
+    "Configuración del Sitio" => Yii::app()->createUrl("setting"),
     "Instituciones Aliadas"   => Yii::app()->createUrl("setting/partner"),
     "Nuevo"
 ];

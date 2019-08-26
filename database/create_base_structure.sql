@@ -511,11 +511,12 @@ select * from partners;
 drop table if exists partners;
 create table partners(
 	partner_id int not null primary key auto_increment,
-	image_id varchar(255) not null,
+	image_id int not null,
 	partner_name varchar(255) not null,
 	partner_url text not null,
 	partner_description text null,
 	partner_order int not null DEFAULT '1',
-	status tinyint(1) NOT NULL DEFAULT '1'
+	status tinyint(1) NOT NULL DEFAULT '1',
+	foreign key (image_id) references images (image_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -27,5 +27,11 @@ class PageController extends Auth {
 
     Response::JSON(false, 200, "success", compact("data"));
   }
+  
+  public function actionLists() {
+    $data = ApiQuery::getAllLists();
+
+    Response::JSON(false, 200, "success", compact("data"));
+  }
 
 }

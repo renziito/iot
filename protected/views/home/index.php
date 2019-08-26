@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#"<strong>IoT</strong></a>
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
@@ -19,7 +19,7 @@
 </section>
 <section id="about" class="py-5">
   <div class="container">
-    <div class="row" id="content">
+    <div class="row justify-content-center" id="content">
       <?php for ($i = 1; $i <= 3; $i++): ?>
         <div class="col-12 col-md-4">
           <div class="ph-item border-0 p-0">
@@ -68,9 +68,9 @@
     </div>
   </div>
 </section>
-<section id="lists" class="py-5">
+<section class="py-5">
   <div class="container">
-    <div class="row">
+    <div class="row justify-content-center" id="lists">
       <?php for ($i = 1; $i <= 3; $i++): ?>
       <div class="col-12 col-md-4">
         <div class="ph-item">
