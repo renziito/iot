@@ -23,14 +23,22 @@
         });
       },
       rules: {
-        "BannersModel[image_id]": {
+        "BannersModel[banner_title]": {
           required: true
         }
       },
       messages:{
-        "BannersModel[image_id]": "Debes seleccionar una imagen."
+        "BannersModel[banner_title]": "Debes ingresar el titulo del Banner"
       }
     });
+    if (this.$form.find("#BannersModel_image_id").attr("data-exists") == 0) {
+      this.$form.find("#BannersModel_image_id").rules("add", {
+        required: true,
+        messages: {
+          required: "Debes seleccionar una imagen."
+        }
+      });
+    }
   };
 
 

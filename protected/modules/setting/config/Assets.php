@@ -21,9 +21,14 @@ class Assets extends AssetsBundle {
       "banner.index"     => [
           "js"      => ["banner.list"],
           "css"     => [],
-          "depends" => ["sortable"],
+          "depends" => ["sortable", "alertPlugin"],
       ],
       "banner.create"    => [
+          "js"      => ["banner.create"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "jquery-validation"],
+      ],
+      "banner.update"    => [
           "js"      => ["banner.create"],
           "css"     => [],
           "depends" => ["alertPlugin", "jquery-validation"],

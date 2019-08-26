@@ -3,7 +3,9 @@
 
   var SettingBannerList = function () {
     this.config = $.extend(true, APP, {});
+    this.alert = new AlertPlugin();
     this.$form = $("#form-banner");
+    this.$btnDelete = $(".delete-banner");
     this.list = document.getElementById('bannerList');
   };
 
@@ -17,6 +19,21 @@
     });
   };
 
+  SettingBannerList.prototype._initDelete = function () {
+    var _class = this;
+     this.$btnDelete.on("click", function(e){
+       e.preventDefault();
+       var href = $(this).attr("href");
+       _class.alert.confirm({
+         type: "warning",
+         title: "Adevertencia!",
+         text: "¿Está seguro que desea eliminar el registro?"
+       }, function(){
+         window.location.href = href;
+       });
+     });
+  };
+  
   SettingBannerList.prototype._initSortable = function () {
     var _class = this;
 
@@ -29,9 +46,10 @@
       }
     });
   };
-
+  
   SettingBannerList.prototype.init = function () {
     this._initSortable();
+    this._initDelete();
   };
 
   (new SettingBannerList()).init();

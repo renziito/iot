@@ -35,15 +35,24 @@
 <div class="form-group row">
   <label for="BannersModel_image_id" class="col-md-3 control-label">Imagen</label>
   <div class="col-md-9">
-
+    <?php
+    $url = "https://via.placeholder.com/800x500";
+    if (isset($model->image_id)) {
+      $image = ImagesModel::model()->findByPk($model->image_id);
+      if ($image) {
+        $url = Utils::buildUrlThumbnail("storage/images", $image->image_name, "MD");
+      }
+    }
+    ?>
     <div class="mb-2">
-      <img id="bannePreview" class="img-thumbnail" src="https://via.placeholder.com/800x500" width="50%">
+      <img id="bannePreview" class="img-thumbnail" src="<?= $url ?>" width="50%">
     </div>
     <div>
       <?=
       $form->fileField($model, 'image_id', [
           "style"  => "width: 0.1px;height: 0.1px;opacity: 0;overflow: hidden;",
-          "accept" => "image/*"
+          "accept" => "image/*",
+          "data-exists" => isset($model->image_id) ? 1 : 0
       ]);
       ?>
     </div>

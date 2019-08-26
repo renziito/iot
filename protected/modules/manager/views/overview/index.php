@@ -4,7 +4,7 @@ $this->breadcrumbs = [
 ];
 ?>
 <div class="row">
-  <?php if (Yii::app()->user->checkAccess(["MANAGER_CREATE"])):
+  <?php if (Yii::app()->user->checkAccess(["RESPONSABLE_CREATE"])):
     ?>
     <div class="col-12">
       <div class="text-right">

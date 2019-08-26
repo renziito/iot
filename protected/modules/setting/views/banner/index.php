@@ -42,12 +42,12 @@ $form              = $this->beginWidget('CActiveForm', [
             <div class="" style="background-position: center center;background-repeat: no-repeat;background-size: cover;background-image: url('<?= $src ?>');width: 100%; min-height: 180px; max-height: 180px;"></div>
           </div>
           <div class="card-footer text-right">
-            <button type="button" class="btn btn-default no-mrg-btm btn-sm">
+            <a href="<?=Yii::app()->createUrl("setting/banner/update/id/{$banner["bid"]}")?>" class="btn btn-default no-mrg-btm btn-sm">
               <i class="fa fa-pencil"></i>
-            </button>
-            <button type="button" class="btn btn-danger no-mrg-btm btn-sm">
+            </a>
+            <a href="<?=Yii::app()->createUrl("setting/banner/delete/id/{$banner["bid"]}")?>" class="btn btn-danger no-mrg-btm btn-sm delete-banner">
               <i class="fa fa-trash"></i>
-            </button>
+            </a>
           </div>
         </div>
       </div>
