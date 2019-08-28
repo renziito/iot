@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs = [
     "Dispositivos" => Yii::app()->createUrl("device"),
-    "Responsables"
+    "Mantenimiento"
 ];
 ?>
 
@@ -14,13 +14,13 @@ $this->breadcrumbs = [
             <i class="fa fa-plus"></i>
             Nuevo Responsable
           </button>
-          <button id="btnAddUser" class="btn btn-success btn-sm">
+          <button id="btnAdd" class="btn btn-success btn-sm">
             <i class="fa fa-plus"></i>
-            Agregar Responsable
+            Agregar Mantenimiento
           </button>
         </div>
         <div class="table-responsive">
-          <table class="table" id="tbDeviceResponsables"></table>
+          <table class="table" id="tbDeviceMaintenances"></table>
         </div>
       </div>
     </div>
@@ -28,6 +28,6 @@ $this->breadcrumbs = [
 </div>
 
 <?php
-$this->renderPartial("modals/md-add-user");
+$this->renderPartial("modals/md-maintenance", ["device" => $model,"model" => new DeviceMaintenancesModel()]);
 $this->renderPartial("application.modules.manager.views.overview.modals.md-create",["model" => (new ResponsablesModel())]);
 ?>

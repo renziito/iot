@@ -5,7 +5,7 @@ var ManagerDelete = function (options) {
   this.alert = new AlertPlugin();
   this.options = this._setOptions(options);
   this.url = {
-    delete: this.config.url.moduleFullUrl + "/manage/delete"
+    delete: this.config.url.baseFullUrl + "/manager/manage/delete"
   };
 
   this._init();

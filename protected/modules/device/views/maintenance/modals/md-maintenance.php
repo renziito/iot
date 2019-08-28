@@ -1,8 +1,8 @@
-<section class="modal" id="md-update" data-backdrop="static" tabindex="-1" action="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" action="document">
+<section class="modal" id="md-maintenance" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="md-title-action">Actualizar Responsable</h5>
+        <h5 class="modal-title" id="md-title-role">Agregar Mantenimiento</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i class="fa fa-times" aria-hidden="true"></i>
         </button>
@@ -10,22 +10,25 @@
       <div class="modal-body">
         <?php
         $form = $this->beginWidget('CActiveForm', [
-            'id'          => 'form-update',
-            'action' => Yii::app()->createUrl("manager/manage/update"),
+            'id'          => 'form-maintenance',
             'htmlOptions' => [
                 'action' => 'form',
             ]
         ]);
+
+        $model->device_id = $device->device_id;
         ?>
+        
+        <?=$form->hiddenField($model, 'device_id', []);?>
         <div class="row m-t-15 m-b-15">
           <div class="col-12">
             <div class="form-group">
-              <label for="rname">Nombre del Responsable</label>
-              <?= CHtml::hiddenField('ResponsablesModel[responsable_id]', '', ["id" => "rid"]); ?>
+              <label for="DeviceMaintenancesModel_responsable_id">Responsable</label>
               <?=
-              CHtml::textField('ResponsablesModel[responsable_name]', '', [
+              $form->dropDownList($model, 'responsable_id',DeviceUtil::listResponsables(), [
                   "class" => "form-control",
-                  "id"    => "rname"
+                  "empty" => "Seleecionar Responsable",
+                  "style" => "width:100%"
               ]);
               ?>
             </div>
@@ -34,24 +37,11 @@
         <div class="row m-t-15 m-b-15">
           <div class="col-12">
             <div class="form-group">
-              <label for="rposition">Cargo</label>
+              <label for="DeviceMaintenancesModel_devicemaintenance_date">Fecha</label>
               <?=
-              CHtml::textField('ResponsablesModel[responsable_position]', '', [
+              $form->textField($model, 'devicemaintenance_date', [
                   "class" => "form-control",
-                  "id"    => "rposition"
-              ]);
-              ?>
-            </div>
-          </div>
-        </div>
-        <div class="row m-t-15 m-b-15">
-          <div class="col-12">
-            <div class="form-group">
-              <label for="rphone">Teléfono/Celular</label>
-              <?=
-              CHtml::textField('ResponsablesModel[responsable_phone]', '', [
-                  "class" => "form-control",
-                  "id"    => "rphone"
+                  "readonly" => true
               ]);
               ?>
             </div>

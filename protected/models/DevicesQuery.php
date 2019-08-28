@@ -43,5 +43,24 @@ class DevicesQuery {
         ])
         ->queryAll();
   }
+  public static function getAllMaintenance($device_id) {
+    return Yii::app()->db->createCommand()
+        ->select("
+          dm.devicemaintenance_id as dmid
+          ,dm.device_id as did
+          ,dm.devicemaintenance_date as dmdate
+          ,r.responsable_id as rid
+          ,r.responsable_name rname
+          ,r.responsable_phone rphone
+          ,r.responsable_position rposition
+        ")
+        ->from("device_maintenances dm")
+        ->join("responsables r", "r.responsable_id = dm.responsable_id")
+        ->where("dm.status = :status and dm.device_id = :id", [
+            ":status" => Globals::STATUS_ACTIVE,
+            ":id"     => $device_id
+        ])
+        ->queryAll();
+  }
 
 }

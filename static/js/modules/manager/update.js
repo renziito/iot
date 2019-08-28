@@ -8,7 +8,7 @@ var ManagerUpdate = function (options) {
   this.$form = $(this.options.form);
   this.validator = {};
   this.url = {
-    update: this.config.url.moduleFullUrl + "/manage/update"
+    update: this.config.url.baseFullUrl + "/manager/manage/update"
   };
 
   this._init();

@@ -11,6 +11,7 @@
         <?php
         $form = $this->beginWidget('CActiveForm', [
             'id'          => 'form-create',
+            'action' => Yii::app()->createUrl("manager/manage/create"),
             'htmlOptions' => [
                 'action' => 'form',
             ]

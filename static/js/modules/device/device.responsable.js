@@ -78,6 +78,24 @@
     });
 
   };
+  
+  DeviceResponsable.prototype._initCreateResponsables = function () {
+    var _class = this;
+    var create = new ManagerCreate({
+      btnOpen: "#btncreateResponsable",
+      onSubmit: function (data) {
+       _class._addUser(data.rid)
+              .then(function (data) {
+                _class.table.refresh();
+                _class.tableResponsable.refresh();
+              })
+              .catch(function (error) {
+
+              });
+      }
+    });
+    create.init();
+  };
 
   DeviceResponsable.prototype._initTableResponsables = function () {
     var _class = this;
@@ -152,7 +170,7 @@
               title: "Advertencia!",
               text: "¿Está seguro que desea eliminar el registro?"
             }, function (result) {
-              _class._delete(row.vid)
+              _class._delete(row.drid)
                 .then(function (data) {
                   _class.table.refresh();
                 });
@@ -167,6 +185,7 @@
   };
 
   DeviceResponsable.prototype.init = function () {
+    this._initCreateResponsables();
     this._initTable();
     this._initModalAddUser();
   };

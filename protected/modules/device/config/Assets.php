@@ -18,20 +18,25 @@ class Assets extends AssetsBundle {
       ]
   ];
   public $action     = [
-      "overview.index" => [
+      "overview.index"    => [
           "js"      => ["device.list"],
           "css"     => [],
           "depends" => ["alertPlugin", "tablePlugin"],
       ],
-      "manage.create" => [
+      "manage.create"     => [
           "js"      => ["device.create"],
           "css"     => [],
           "depends" => ["alertPlugin", "jquery-validation"],
       ],
       "responsable.index" => [
-          "js"      => ["device.responsable"],
+          "js"      => ["manager/create", "device.responsable"],
           "css"     => [],
-          "depends" => ["alertPlugin", "tablePlugin"],
+          "depends" => ["alertPlugin", "tablePlugin", "jquery-validation"],
+      ],
+      "maintenance.index" => [
+          "js"      => ["manager/create", "device.maintenance"],
+          "css"     => [],
+          "depends" => ["alertPlugin", "tablePlugin", "datepiker", "select2", "jquery-validation"],
       ]
   ];
 

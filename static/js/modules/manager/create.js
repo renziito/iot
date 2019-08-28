@@ -9,7 +9,7 @@ var ManagerCreate = function (options) {
   this.$form = $(this.options.form);
   this.validator = {};
   this.url = {
-    create: this.config.url.moduleFullUrl + "/manage/create"
+    create: this.config.url.baseFullUrl + "/manager/manage/create"
   };
 };
 

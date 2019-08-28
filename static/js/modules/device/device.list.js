@@ -9,6 +9,8 @@
       list: this.config.url.controllerFullUrl + '/list',
       update: this.config.url.moduleFullUrl + '/manage/update',
       delete: this.config.url.moduleFullUrl + '/manage/delete',
+      responsable: this.config.url.moduleFullUrl + '/responsable/index',
+      maintenance: this.config.url.moduleFullUrl + '/maintenance/index',
     };
   };
 
@@ -59,6 +61,8 @@
             '<div class="wrapper text-center" action="toolbar">',
             '<div class="btn-group btn-group-sm" action="group">',
             '<a href="' + _class.url.update + '/id/' + row.did + '" class="edit btn btn-outline-info" data-action="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>',
+            '<a href="' + _class.url.responsable + '/id/' + row.did + '" class="responsable btn btn-outline-dark" data-action="responsable"><i class="fa fa-user" aria-hidden="true"></i></a>',
+            '<a href="' + _class.url.maintenance + '/id/' + row.did + '" class="maintenance btn btn-outline-success" data-action="maintenance"><i class="fa fa-line-chart" aria-hidden="true"></i></a>',
             '<button type="button" class="delete btn btn-outline-danger" data-action="delete"><i class="fa fa-trash" aria-hidden="true"></i></button>',
             '</div>',
             '</div>'

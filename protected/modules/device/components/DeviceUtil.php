@@ -19,5 +19,16 @@ class DeviceUtil {
 
     return $data;
   }
+  
+  public static function listResponsables() {
+    $data = [];
+
+    foreach (ResponsablesQuery::getAll() as $type) {
+      $data[$type["rid"]] = $type["rname"];
+    }
+
+    return $data;
+  }
+  
 
 }
