@@ -520,3 +520,15 @@ create table partners(
 	foreign key (image_id) references images (image_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists device_activities;
+create table device_activities(
+	deviceactivity_id int not null primary key AUTO_INCREMENT,
+	device_id int not null,
+	typevariable_id int not null,
+	deviceactivity_value varchar(500) not null,
+	date_created datetime not null default CURRENT_TIMESTAMP,
+	status tinyint(1) not null default '1',
+	foreign key (device_id) references devices (device_id),
+	foreign key (typevariable_id) references type_variables (typevariable_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

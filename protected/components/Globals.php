@@ -10,7 +10,7 @@
  */
 class Globals {
 
-  const SECRET          = "eZiYIWw0";
+  const SECRET          = "Jn0lb3rt0Vm";
   const STATUS_ACTIVE   = 1;
   const STATUS_INACTIVE = 0;
 

@@ -29,11 +29,22 @@ class TypeVariablesQuery {
         ->where("v.status = :status", [
             ":status" => Globals::STATUS_ACTIVE
         ])
-        ->andWhere("not exists (select tdv.typedevicevariable_id from type_device_variables tdv where tdv.typevariable_id = v.typevariable_id and tdv.typedevice_id = :id and tdv.status = :estado)",[
-            ":id" => $typedevice_id,
+        ->andWhere("not exists (select tdv.typedevicevariable_id from type_device_variables tdv where tdv.typevariable_id = v.typevariable_id and tdv.typedevice_id = :id and tdv.status = :estado)", [
+            ":id"     => $typedevice_id,
             ":estado" => Globals::STATUS_ACTIVE
         ])
         ->queryAll();
+  }
+
+  public static function getIdByKey($typevariable_key) {
+    return Yii::app()->db->createCommand()
+        ->select("v.typevariable_id as vid")
+        ->from("type_variables v")
+        ->where("v.status = :status and v.typevariable_key = :key", [
+            ":status" => Globals::STATUS_ACTIVE,
+            ":key"    => $typevariable_key
+        ])
+        ->queryScalar();
   }
 
 }

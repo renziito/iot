@@ -4,7 +4,7 @@ class AuthRoles {
 
   public static $Auth = [
       ['allow',
-          'controllers' => ["api/page"],
+          'controllers' => ["api/page","api/iot"],
           'users'       => ['*'],
       ]
   ];

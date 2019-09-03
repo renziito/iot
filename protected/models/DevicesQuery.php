@@ -62,5 +62,16 @@ class DevicesQuery {
         ])
         ->queryAll();
   }
+  
+  public static function getIdByCode($device_code) {
+    return Yii::app()->db->createCommand()
+        ->select("d.device_id as did")
+        ->from("devices d")
+        ->where("d.status = :status and d.device_code = :code", [
+            ":status" => Globals::STATUS_ACTIVE,
+            ":code" => $device_code
+        ])
+        ->queryScalar();
+  }
 
 }
